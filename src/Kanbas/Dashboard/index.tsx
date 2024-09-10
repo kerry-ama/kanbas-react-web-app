@@ -35,7 +35,7 @@ export default function Dashboard() {
           <img src="/images/cybersecurity.jpg" width={200} />
           <div>
             <Link className="wd-dashboard-course-link" 
-              to="/Kanbas/Courses/2232/Home">
+              to="/Kanbas/Courses/5500/Home">
               CS5500 Cybersecurity
             </Link>
             <p className="wd-dashboard-course-title">
@@ -100,7 +100,7 @@ export default function Dashboard() {
           <img src="/images/mobiledev.jpg" width={200} />
           <div>
             <Link className="wd-dashboard-course-link" 
-              to="/Kanbas/Courses/2232/Home">
+              to="/Kanbas/Courses/4000/Home">
               CS4000 Mobile Development
             </Link>
             <p className="wd-dashboard-course-title">
