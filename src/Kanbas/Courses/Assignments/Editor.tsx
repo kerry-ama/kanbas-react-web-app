@@ -71,7 +71,9 @@ export default function AssignmentEditor() {
                 <tr>
                     <td align="right" valign="top">
                         <label htmlFor="wd-assign-to">Assign to </label><br />
-                    </td>
+                    </td><br />
+                </tr> 
+                <tr>  
                     <td>
                         <input id="wd-assign-to" value={"Everyone"} /> {/* selects this field */}
                     </td>
