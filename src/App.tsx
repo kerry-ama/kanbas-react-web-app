@@ -6,6 +6,7 @@ import { HashRouter, Route, Routes, Navigate} from "react-router-dom";
 
 function App() {
   return (
+    <div>
     <HashRouter>
     <div className="App">
       
@@ -17,6 +18,7 @@ function App() {
       </Routes>
     </div>
     </HashRouter>
+    </div>
   );
 }
 
