@@ -9,6 +9,7 @@ export default function Labs() {
         <div>
             <h1>Welcome to Web Dev</h1>
             <h2>Kerry Owusu</h2>
+            <h3>CS5610 Section 1</h3>
             <h1>Labs</h1>
             <TOC />
             <Routes>
