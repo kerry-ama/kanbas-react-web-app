@@ -1,7 +1,8 @@
 import "./index.css";
+import ReactIconsSampler from "./ReactIcons";
 export default function Lab2() {
     return (
-        <div id="wd-lab2">
+        <div className="container">
             <h2>Lab 2 - Cascading Style Sheets</h2>
             <h3>Styling with the STYLE attribute</h3>
             {/*</div><p {style={{ backgroundColor: "blue",
@@ -179,16 +180,179 @@ export default function Lab2() {
                 <h2>Absolute position</h2>
                 <div className="wd-pos-relative">
                     <div className="wd-pos-absolute-10-10 
-         wd-bg-color-yellow wd-dimension-portrait">
+                        wd-bg-color-yellow wd-dimension-portrait">
                         Portrait</div>
                     <div className="wd-pos-absolute-50-50 
-         wd-bg-color-blue wd-fg-color-white 
-         wd-dimension-landscape">
+                        wd-bg-color-blue wd-fg-color-white 
+                        wd-dimension-landscape">
                         Landscape</div>
                     <div className="wd-pos-absolute-120-20 
-         wd-bg-color-red wd-dimension-square">
+                        wd-bg-color-red wd-dimension-square">
                         Square</div>
                 </div><br /><br /><br /><br /><br /><br /><br />
+                <div id="wd-css-position-fixed">
+                    <h2>Fixed position</h2>
+                    Checkout the blue square that says "Fixed position" stuck all the way on the right and half way down the page. It doesn't scroll with the rest of the page. Its position is "Fixed".
+                    <div className="wd-pos-fixed 
+                        wd-dimension-square wd-bg-color-blue 
+                        wd-fg-color-white">
+                        Fixed position
+                    </div>
+                </div>
+
+                <div id="wd-z-index">
+                    <h2>Z index</h2>
+                    <div className="wd-pos-relative">
+                        <div className="wd-pos-absolute-10-10 
+                            wd-bg-color-yellow wd-dimension-portrait">
+                            Portrait
+                        </div>
+                        <div className="wd-zindex-bring-to-front 
+                            wd-pos-absolute-50-50 wd-dimension-landscape
+                            wd-bg-color-blue wd-fg-color-white">
+                            Landscape
+                        </div>
+                        <div className="wd-pos-absolute-120-20 
+                            wd-bg-color-red wd-dimension-square">
+                            Square
+                        </div>
+                    </div><br /><br /><br /><br /><br /><br /><br />
+                </div>
+                <div id="wd-float-divs">
+                    <h2>Float</h2>
+                    <div>
+                        <div className="wd-float-left wd-dimension-portrait wd-bg-color-yellow">
+                            Yellow </div>
+                        <div className="wd-float-left wd-dimension-portrait wd-bg-color-blue wd-fg-color-white">
+                            Blue </div>
+                        <div className="wd-float-left wd-dimension-portrait wd-bg-color-red">
+                            Red </div>
+                        <img className="wd-float-right"
+                            src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg" />
+                        <div className="wd-float-done"></div>
+                    </div>
+                </div>
+                <div id="wd-css-grid-layout">
+                    <div id="wd-css-left-right-layout">
+                        <h2>Grid layout</h2>
+                        <div className="wd-grid-row">
+                            <div className="wd-grid-col-half-page wd-bg-color-yellow">
+                                <h3>Left half</h3>
+                            </div>
+                            <div className="wd-grid-col-half-page wd-bg-color-blue wd-fg-color-white">
+                                <h3>Right half</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="wd-css-left-third-right-two-thirds" className="wd-grid-row">
+                        <div className="wd-grid-col-third-page wd-bg-color-green
+                            wd-fg-color-white">
+                            <h3>Left third</h3>
+                        </div>
+                        <div className="wd-grid-col-two-thirds-page wd-bg-color-red wd-fg-color-white">
+                            <h3>Right two thirds</h3>
+                        </div>
+                    </div>
+                    <div id="wd-css-side-bars" className="wd-grid-row">
+                        <div className="wd-grid-col-left-sidebar wd-bg-color-yellow">
+                            <h3>Side bar</h3>
+                            <p>This is the left sidebar</p>
+                        </div>
+                        <div className="wd-grid-col-main-content wd-bg-color-blue wd-fg-color-white">
+                            <h3>Main content</h3>
+                            <p>
+                                This is the main content. This is the main content. This is the
+                                main content.
+                            </p>
+                        </div>
+                        <div className="wd-grid-col-right-sidebar wd-bg-color-green wd-fg-color-white">
+                            <h3>Side bar</h3>
+                            <p>This is the right sidebar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="wd-css-flex">
+                    <h2>Flex 1</h2>
+                    <div className="wd-flex-row-container">
+                        <div className="wd-bg-color-yellow">Column 1</div>
+                        <div className="wd-bg-color-blue">Column 2</div>
+                        <div className="wd-bg-color-red">Column 3</div>
+                    </div>
+                </div>
+
+                <div id="wd-css-flex">
+                    <h2>Flex 2</h2>
+                    <div className="wd-flex-row-container">
+                        <div className="wd-bg-color-yellow">
+                            Column 1</div>
+                        <div className="wd-bg-color-blue">
+                            Column 2</div>
+                        <div className="wd-bg-color-red
+                            wd-flex-grow-1">
+                            Column 3</div>
+                    </div>
+                </div>
+                <div id="wd-css-flex">
+                    <h2>Flex 3</h2>
+                    <div className="wd-flex-row-container">
+                        <div className="wd-bg-color-yellow 
+                            wd-width-75px">
+                            Column 1</div>
+                        <div className="wd-bg-color-blue">
+                            Column 2</div>
+                        <div className="wd-bg-color-red
+                            wd-flex-grow-1">
+                            Column 3</div>
+                    </div>
+
+                </div>
+                <div id="wd-reacticonssampler">
+                    <ReactIconsSampler />
+                </div>
+
+                <h2>Bootstrap</h2>
+                <div id="wd-bs-grid-system">
+                    <h2>Grid system</h2>
+                    <div className="row">
+                        <div className="col bg-danger text-white">
+                            <h3>Left half</h3>
+                        </div>
+                        <div className="col bg-primary text-white">
+                            <h3>Right half</h3>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 bg-warning">
+                            <h3>One thirds</h3>
+                        </div>
+                        <div className="col-8 bg-success text-white">
+                            <h3>Two thirds</h3>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-2 bg-dark text-white">
+                            <h3>Sidebar</h3>
+                        </div>
+                        <div className="col-8 bg-secondary text-white">
+                            <h3>Main content</h3>
+                        </div>
+                        <div className="col-2 bg-info">
+                            <h3>Sidebar</h3>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
 
