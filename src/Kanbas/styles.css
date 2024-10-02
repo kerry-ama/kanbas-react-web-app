@@ -84,8 +84,17 @@ body * {
 }
 
 .navbar-account-link {
+    color: red;
+}
+
+.navbar-account-icon {
     color: #dc3545;
     background-color: white;
+}
+
+.navbar-icon-link {
+    color: white;
+    background-color: black;
 }
 
 

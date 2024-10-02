@@ -13,7 +13,7 @@ export default function Modules() {
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
-            Week 1, Course Introduction, Syllabus, Agenda<ModuleControlButtons /></div>
+            Week 1<ModuleControlButtons /></div>
 
           <ul className="wd-lessons list-group rounded-0">
             <li className="wd-lesson list-group-item p-3 ps-1">
@@ -48,7 +48,7 @@ export default function Modules() {
         </li>
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
 
-          <div className="wd-title p-3 ps-2 bg-secondary"> <BsGripVertical className="me-2 fs-3" />Week 2, Formatting User Interfaces with HTML<ModuleControlButtons /></div>
+          <div className="wd-title p-3 ps-2 bg-secondary"> <BsGripVertical className="me-2 fs-3" />Week 2<ModuleControlButtons /></div>
           <ul className="wd-lessons list-group rounded-0">
             <li className="wd-lesson list-group-item p-3 ps-1"><BsGripVertical className="me-2 fs-3" />LEARNING OBJECTIVES<LessonControlButtons /></li>
             <li className="wd-lesson list-group-item p-3 ps-1"><BsGripVertical className="me-5 fs-3" />Learn how to create user interfaces with HTML<LessonControlButtons /></li>
@@ -72,7 +72,7 @@ export default function Modules() {
           </ul>
         </li>
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">Week 3, Styling User Interfaces with CSS<ModuleControlButtons /></div>
+          <div className="wd-title p-3 ps-2 bg-secondary"><BsGripVertical className="me-2 fs-3" />Week 3<ModuleControlButtons /></div>
           <ul className="wd-lessons list-group rounded-0">
             <li className="wd-lesson list-group-item p-3 ps-1"><BsGripVertical className="me-2 fs-3" />LEARNING OBJECTIVES<LessonControlButtons /></li>
             <li className="wd-lesson list-group-item p-3 ps-1"><BsGripVertical className="me-5 fs-3" />Introduction to CSS<LessonControlButtons /></li>

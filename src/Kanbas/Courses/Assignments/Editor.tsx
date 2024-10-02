@@ -90,15 +90,7 @@ export default function AssignmentEditor() {
                     <label className="me-1" htmlFor="wd-assign">Assign </label>
                     <div className="card p-3 w-50">
                         <label htmlFor="wd-assign-to"><strong>Assign to</strong></label>
-                        <div className="form-group">
-                            <label htmlFor="tags">Select Options:</label>
-                            <select id="tags" className="form-control" multiple>
-                                <option value="Option 1">Option 1</option>
-                                <option value="Option 2">Option 2</option>
-                                <option value="Option 3">Option 3</option>
-                                <option value="Option 4">Option 4</option>
-                            </select>
-                        </div>
+                        
                         <input id="wd-assign-to" value={"Everyone"} /> {/* selects this field */}
                         <label htmlFor="wd-due-date">Due</label>
                         <input type="date"

@@ -14,15 +14,20 @@ export default function AssignmentControl() {
                 
                     
                     <div className="col-sm-3 d-flex align-items-center float-end mb-5">
-                    <HiMagnifyingGlass />
+                    
                         <input className="form-control " 
                             placeholder="&#128270; Search..."
                             id="username"
                             type="search"
-                            />
+                            
+                            >
+                            
+                            </input>
+                            
                             
 
                     </div>
+                    
                
 
             </form>
