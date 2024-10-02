@@ -67,3 +67,25 @@ body * {
 .multiple-modules-link {
     text-decoration: none;
 }
+
+.custom-course-margin {
+    margin: 15px !important;
+    
+}
+
+.navbar-link.active {
+    background-color: white;
+    color: #dc3545;
+}
+
+.navbar-link {
+    background-color: black;
+    color: white;
+}
+
+.navbar-account-link {
+    color: #dc3545;
+    background-color: white;
+}
+
+

@@ -7,21 +7,23 @@ export default function AssignmentControl() {
             <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assignment</button>
-        <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end">
+        <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end ms-3">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group</button>
             <form >
-                <div className="form-group row d-flex justify-content-start">
+                
                     
-                    <div className="col-sm-3">
+                    <div className="col-sm-3 d-flex align-items-center float-end mb-5">
+                    <HiMagnifyingGlass />
                         <input className="form-control " 
-                            placeholder="Search..."
+                            placeholder="&#128270; Search..."
                             id="username"
+                            type="search"
                             />
-                            <HiMagnifyingGlass />
+                            
 
                     </div>
-                </div>
+               
 
             </form>
             

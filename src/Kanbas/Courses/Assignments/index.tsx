@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom';
 export default function Assignments() {
   return (
     <div id="wd-assignments">
+      <div className="row">
       <AssignmentControl />
-      
+      </div>
       <ul className="list-group rounded-0">
         <li className="wd-module list-group-item p-0
                    mb-5 fs-5 border-gray dropdown">
@@ -46,7 +47,8 @@ export default function Assignments() {
               <div className="indented-text"><strong>Due</strong> May 20 at 11:59pm | 100 pts</div>
               
             </li>
-            <li className="wd-assignment-list-item p-3 ps-1">
+            <div>
+            <li className="wd-assignment-list-item list-group-item p-3 ps-1">
               <Link to="/Kanbas/Courses/1234/Assignments/333" className="indented-text assignment-link" >
                 A3 - JAVASCRIPT + REACT
               </Link><br />
@@ -56,7 +58,7 @@ export default function Assignments() {
             </Link> | <strong>Not available until</strong> May 20 at 12:00am |<AssignmentControlButtons /><br />
               <div className="indented-text"><strong>Due</strong> May 27 at 11:59pm | 100 pts</div>
             </li>
-            
+            </div>
           </ul>
           </li>
           
