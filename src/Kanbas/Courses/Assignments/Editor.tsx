@@ -98,14 +98,14 @@ export default function AssignmentEditor() {
                             value="2024-05-13" />
 
                         <form>
-                            <div className="row">
-                                <div className="col">
+                            <div className="row mt-1">
+                                <div className="col mt-1">
                                     <label className="form-label" htmlFor="wd-available-from"> Available From </label>
                                     <input className="form-control w-50" type="date" id="wd-available-from" value="2024-05-06" />
                                 </div>
-                                <div className="col">
+                                <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
-                                    <input className="form-control w-50" type="date" id="wd-available-until" value="2024-05-20" />
+                                    <input className="form-control w-50 mt-2" type="date" id="wd-available-until" value="2024-05-20" />
                                 </div>
                             </div>
                         </form>
