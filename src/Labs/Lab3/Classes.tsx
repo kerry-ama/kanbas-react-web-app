@@ -25,6 +25,4 @@ export default function Classes() {
       <div className="wd-bg-red wd-fg-black wd-padding-10px">
         Red background     </div><hr/>
 
-        <div id="asd">I am red</div>
-        <div className="qwe">I am blue</div>  
     </div> ) };
