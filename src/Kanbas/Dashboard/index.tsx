@@ -15,9 +15,9 @@ export default function Dashboard() {
                       className="wd-dashboard-course-link text-decoration-none text-dark" >
                   <img src={course.image} width="100%" height={160} />
                   <div className="card-body">
-                    <h5 className="wd-dashboard-course-title card-title">
+                    <h5 className="wd-dashboard-course-title card-title text-truncate" title={course.name}>
                       {course.name} </h5>
-                    <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
+                    <p className="wd-dashboard-course-title card-text overflow-y-hidden truncate" title={course.description} style={{ maxHeight: 100 }}>
                       {course.description} </p>
                     <button className="btn btn-primary"> Go </button>
                   </div>

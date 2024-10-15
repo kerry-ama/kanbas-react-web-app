@@ -14,29 +14,42 @@ export default function Assignments() {
       <div className="row">
       <AssignmentControl />
       </div>
-      {/*<ul className="list-group rounded-0">
+      <ul className="list-group rounded-0">
+      <li className="wd-module list-group-item p-0
+                   mb-5 fs-5 border-gray dropdown">
+          <div className="wd-title p-3 ps-2 bg-secondary">
+          <BsGripVertical className="me-2 fs-3" />
+          <div className="btn dropdown-toggle"><strong>ASSIGNMENTS</strong></div>
+          <AssignmentListControlButtons /> 
+          <div className="ellipse float-end">40% of Total </div>
+          </div>
+          <ul className="wd-assignments-list list-group rounded-0">
       {assignments
+
           .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
-          <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray dropdown">
-            <div className="wd-title p-3 ps-2 bg-secondary">
-              <BsGripVertical className="me-2 fs-3" /> 
-              <div className="btn dropdown-toggle"> {assignment.title} </div>
-            </div>
-            {assig.lessons && (
-              <ul className="wd-lessons list-group rounded-0">
-                {module.lessons.map((lesson: any) => (
-                  <li className="wd-lesson list-group-item p-3 ps-1">
-                    <BsGripVertical className="me-2 fs-3" /> {lesson.name} 
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
+            <li className="wd-assignment-list-item list-group-item p-3 ps-1">
+            <div>
+                <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                  className="wd-assignment-link indented-text assignment-link"
+                   >
+                  {assignment.title}
+                </Link><br /><BsGripVertical className="me-2 fs-3" /><MdAssignment className="me-4 fs-3 text-success"/>
+                <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link text-danger multiple-modules-link" >
+                Multiple Modules
+                </Link>  | <strong>Not available until</strong> {assignment.availability} | <AssignmentControlButtons /><br />
+                <div className="indented-text"><strong>Due</strong> {assignment.due} | {assignment.points} pts</div>
+                
+              </div>
+              
+            </li>
+      
         ))}
-
-      </ul>*/}
-
+        </ul>
+        </li>
+        
+      </ul>
+      {/*
       <ul className="list-group rounded-0">
         <li className="wd-module list-group-item p-0
                    mb-5 fs-5 border-gray dropdown">
@@ -87,9 +100,9 @@ export default function Assignments() {
             </li>
             </div>
           </ul>
-          </li>
+        </li>
           
-      </ul>
+      </ul>*/}
 
 
       

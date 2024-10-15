@@ -97,4 +97,13 @@ body * {
     background-color: black;
 }
 
+.truncate {
+    display: inline-block;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+
 
