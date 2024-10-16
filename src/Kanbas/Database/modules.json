@@ -81,36 +81,168 @@
       "_id": "M201",
       "name": "Fundamentals of Aerodynamics",
       "description": "Basic aerodynamic concepts and fluid dynamics principles.",
-      "course": "RS102"
+      "course": "RS102", 
+      "lessons": [
+        
+          {
+            "_id": "L111",
+            "name": "Introduction to Aerodynamics",
+            "description": "Overview of aerodynamic principles and applications.",
+            "module": "M201"
+          },
+          {
+            "_id": "L112",
+            "name": "Basic Fluid Mechanics",
+            "description": "Fundamental concepts of fluid properties, flow, and behavior.",
+            "module": "M201"
+          },
+          {
+            "_id": "L113",
+            "name": "Aerodynamic Forces and Moments",
+            "description": "Analysis of lift, drag, and moment forces on bodies in motion.",
+            "module": "M201"
+          } 
+        
+      ]
     },
     {
       "_id": "M202",
       "name": "Subsonic and Supersonic Flow",
       "description": "Understanding subsonic and supersonic aerodynamic behaviors.",
-      "course": "RS102"
+      "course": "RS102",
+      "lessons": [
+        
+          {
+            "_id": "L211",
+            "name": "Introduction to Subsonic Flow",
+            "description": "Overview of the differences between subsonic, transonic, and supersonic flow regimes.",
+            "module": "M201"
+          },
+          {
+            "_id": "L212",
+            "name": "Basic Fluid Properties",
+            "description": "Fundamental concepts of Density, viscosity, and temperature effects on subsonic flow.",
+            "module": "M201"
+          },
+          {
+            "_id": "L213",
+            "name": "Bernoulli’s Principle",
+            "description": "Understanding Bernoulli’s equation in subsonic flow..",
+            "module": "M201"
+          } 
+        
+      ]
     },
     {
       "_id": "M203",
       "name": "Aerodynamic Heating",
       "description": "Study of aerodynamic heating and thermal protection systems.",
-      "course": "RS102"
+      "course": "RS102", 
+      "lessons": [
+        
+          {
+            "_id": "L311",
+            "name": "Introduction to Aerodynamic Heating",
+            "description": "Overview of applications in aerospace, particularly in re-entry vehicles and high-speed aircraft.",
+            "module": "M201"
+          },
+          {
+            "_id": "L312",
+            "name": "Basic Principles of Heat Transfer",
+            "description": "The role of heat transfer mechanisms in high-speed flight.",
+            "module": "M201"
+          },
+          {
+            "_id": "L313",
+            "name": "Fluid Dynamics and Heating",
+            "description": "Understanding the relationship between airflow speed, pressure, and temperature.",
+            "module": "M201"
+          } 
+        
+      ]
     },
     {
       "_id": "M301",
       "name": "Spacecraft Structural Design",
       "description": "Fundamentals of designing spacecraft structures and materials selection.",
-      "course": "RS103"
+      "course": "RS103", 
+      "lessons": [
+        
+          {
+            "_id": "L121",
+            "name": "Introduction to Aerodynamics",
+            "description": "Overview of aerodynamic principles and applications.",
+            "module": "M301"
+          },
+          {
+            "_id": "L122",
+            "name": "Basic Fluid Mechanics",
+            "description": "Fundamental concepts of fluid properties, flow, and behavior.",
+            "module": "M301"
+          },
+          {
+            "_id": "L123",
+            "name": "Aerodynamic Forces and Moments",
+            "description": "Analysis of lift, drag, and moment forces on bodies in motion.",
+            "module": "M301"
+          } 
+        
+      ]
     },
     {
       "_id": "M302",
       "name": "Orbital Mechanics",
       "description": "Understanding orbital dynamics and mission planning.",
-      "course": "RS103"
+      "course": "RS103",
+      "lessons": [
+        
+          {
+            "_id": "L221",
+            "name": "Introduction to Orbital Mechanics",
+            "description": "Overview of the field and its significance in space exploration and satellite technology.",
+            "module": "M301"
+          },
+          {
+            "_id": "L222",
+            "name": "The Two-Body Problem",
+            "description": "Analyzing the motion of two bodies under mutual gravitational attraction.",
+            "module": "M301"
+          },
+          {
+            "_id": "L223",
+            "name": "Newton’s Laws of Motion and Universal Gravitation",
+            "description": "Understanding Newton’s laws as they apply to orbital motion.",
+            "module": "M301"
+          } 
+        
+      ]
     },
     {
       "_id": "M303",
       "name": "Spacecraft Systems Engineering",
       "description": "Overview of spacecraft systems and subsystems engineering.",
-      "course": "RS103"
+      "course": "RS103", 
+      "lessons": [
+        
+          {
+            "_id": "L321",
+            "name": "Introduction to Spacecraft Systems Engineering",
+            "description": "Overview of spacecraft systems engineering and its role in space missions.",
+            "module": "M301"
+          },
+          {
+            "_id": "L322",
+            "name": "Systems Engineering Process",
+            "description": "Understanding the systems engineering lifecycle: requirements analysis, design, implementation, testing, and verification.",
+            "module": "M301"
+          },
+          {
+            "_id": "L323",
+            "name": "Requirements Definition and Management",
+            "description": "Techniques for validating and verifying requirements throughout the project.",
+            "module": "M301"
+          } 
+        
+      ]
     }
   ]
