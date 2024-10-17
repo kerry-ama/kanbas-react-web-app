@@ -37,8 +37,8 @@ export default function Assignments() {
                 </Link><br /><BsGripVertical className="me-2 fs-3" /><MdAssignment className="me-4 fs-3 text-success"/>
                 <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link text-danger multiple-modules-link" >
                 Multiple Modules
-                </Link>  | <strong>Not available until</strong> {assignment.availability} | <AssignmentControlButtons /><br />
-                <div className="indented-text"><strong>Due</strong> {assignment.due} | {assignment.points} pts</div>
+                </Link>  | <strong>Not available until</strong> {assignment.until} | <AssignmentControlButtons /><br />
+                <div className="indented-text"><strong>Due</strong> {assignment.due_assign} | {assignment.points} pts</div>
                 
               </div>
               

@@ -16,7 +16,7 @@ export default function AssignmentEditor() {
         <div id="wd-assignments-editor w-100">
             <form>
             {assignments
-                .filter((assignment: any) => assignment._id === cid)
+                .filter((assignment: any) => assignment._id === aid)
                 .map((assignment: any) => (
                 <div className="me-5">
                     <label htmlFor="wd-name" className="col-sm-10 ms-10">
@@ -33,25 +33,17 @@ export default function AssignmentEditor() {
             
                 ))}
              
-                
+                 
                 <div className="me-5">
-
+                {assignments
+                .filter((assignment: any) => assignment._id === aid)
+                .map((assignment: any) => (
                     <textarea className="form-control mb-3 w-100" rows={10} >
 
-                        The assignment is available online.
-
-                        Submit a link to the landing page of your Web application running on Netlify.
-
-                        The landing page should include the following:
-
-                        Your full name and section
-                        Links to each of the lab assignments
-                        Link to the Kanbas assigment
-                        Links to all relevant code repositories
-
-                        The Kanbas application should include a link to navigate back to the landing page.
+                        {assignment.description}
 
                     </textarea>
+                    ))}
                 </div>
 
                 {assignments
@@ -94,19 +86,19 @@ export default function AssignmentEditor() {
                         <div className="d-flex justify-content-start">
                             <div className="checkbox">
                                 <label className="mb-4"><strong>Online Entry Options</strong></label><br />
-                                <input className="mb-4" type="checkbox" name="check-entry" id="wd-text-entry" />
+                                <input className="mb-4 me-1" type="checkbox" name="check-entry" id="wd-text-entry" />
                                 <label htmlFor="wd-text-entry">Text Entry</label><br />
 
-                                <input className="mb-4" type="checkbox" name="check-entry" id="wd-website-url" />
+                                <input className="mb-4 me-1" type="checkbox" name="check-entry" id="wd-website-url" />
                                 <label htmlFor="wd-website-url">Website URL</label><br />
 
-                                <input className="mb-4" type="checkbox" name="check-entry" id="wd-media-recordings" />
+                                <input className="mb-4 me-1" type="checkbox" name="check-entry" id="wd-media-recordings" />
                                 <label htmlFor="wd-media-recordings">Media Recordings</label><br />
 
-                                <input className="mb-4" type="checkbox" name="check-entry" id="wd-student-annotation" />
+                                <input className="mb-4 me-1" type="checkbox" name="check-entry" id="wd-student-annotation" />
                                 <label htmlFor="wd-student-annotation">Student Annotation</label><br />
 
-                                <input className="mb-3" type="checkbox" name="check-entry" id="wd-file-upload" />
+                                <input className="mb-3 me-1" type="checkbox" name="check-entry" id="wd-file-upload" />
                                 <label htmlFor="wd-file-upload">File Uploads</label>
 
 
@@ -125,7 +117,7 @@ export default function AssignmentEditor() {
                         <input id="wd-assign-to" value={"Everyone"} /> {/* selects this field */}
                         
                         <label htmlFor="wd-due-date">Due</label>
-                        <input type="date"
+                        <input type="datetime-local"
                             id="wd-due-date"
                             value={assignment.due} />
 
@@ -133,11 +125,11 @@ export default function AssignmentEditor() {
                             <div className="row mt-1">
                                 <div className="col mt-1">
                                     <label className="form-label" htmlFor="wd-available-from"> Available From </label>
-                                    <input className="form-control w-50" type="date" id="wd-available-from" value="2024-05-06" />
+                                    <input className="form-control w-60" type="datetime-local" id="wd-available-from" value={assignment.availability} />
                                 </div>
                                 <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
-                                    <input className="form-control w-50 mt-2" type="date" id="wd-available-until" value="2024-05-20" />
+                                    <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" value={assignment.due} />
                                 </div>
                             </div>
                         </form>
