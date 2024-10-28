@@ -2,15 +2,19 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 export default function AssignmentControl() {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
     return (
         <div id="wd-assignment-controls" className="text-nowrap">
+            {currentUser.role === "FACULTY" &&
             <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end">
         <BsThreeDotsVertical className="position-relative" style={{ bottom: "1px" }} />
-        </button>
+        </button>}
+        {currentUser.role === "FACULTY" &&   
             <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Quiz</button>
+        Quiz</button>}
         
             <form >
                 

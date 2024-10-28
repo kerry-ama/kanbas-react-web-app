@@ -1,17 +1,33 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 import CancelSign from "./CancelSign";
-export default function ModulesControls() {
-  return (
+import ModuleEditor from "./ModuleEditor";
+import { useSelector } from "react-redux";
+import { Navigate, useParams, useNavigate } from "react-router";
+import * as db from "../../Database";
+export default function ModulesControls({ moduleName, setModuleName, addModule }:
+  { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const {cid, aid} = useParams();
+    const courses = db.courses;
+    const course = courses.find((course) => course._id === cid);
+    const users = db.users;
+    const modules = db.modules;
+    
+   
+    return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
+      {currentUser.role === "FACULTY" &&
+      <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end"
+      data-bs-toggle="modal" data-bs-target="#wd-add-module-dialog" >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Module</button>
+          Module</button>}
       <div className="dropdown d-inline me-1 float-end">
+      {currentUser.role === "FACULTY" &&
         <button id="wd-publish-all-btn" className="btn btn-lg btn-secondary dropdown-toggle"
           type="button" data-bs-toggle="dropdown">
           <GreenCheckmark />
-          Publish All</button>
+          Publish All</button>}
         <ul className="dropdown-menu">
           <li>
             <a id="wd-publish-all-modules-and-items-btn" className="dropdown-item" href="#">
@@ -39,9 +55,12 @@ export default function ModulesControls() {
           
         </ul>
       </div>
-      <button id="wd-view-progress" className="btn btn-lg me-1 float-end btn-secondary">View Progress</button>
+      {currentUser.role === "FACULTY" &&
+      <button id="wd-view-progress" className="btn btn-lg me-1 float-end btn-secondary">View Progress</button>}
       <button id="wd-collapse-all" className="btn btn-lg me-1 float-end btn-secondary">Collapse All</button>
       {/* Implement the View Progress and Collapse All buttons with IDs wd-view-progress and wd-collapse-all */}
+      {currentUser.role === "FACULTY" && <ModuleEditor dialogTitle="Add Module" moduleName={moduleName}
+                    setModuleName={setModuleName} addModule={addModule} />}
 
     </div>
 );}

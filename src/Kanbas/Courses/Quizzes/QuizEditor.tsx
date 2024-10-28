@@ -1,16 +1,21 @@
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { Link, Route } from "react-router-dom";
 import * as db from "../../Database";
 import Courses from "..";
+import { useSelector } from "react-redux";
 
 export default function QuizEditor() {
     const { cid, aid, qid, qeid } = useParams()
     console.log(aid)
-    const assignments = db.assignments;
+    const assignments = db.quizzes;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
 
     console.log(course)
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    if (currentUser.role !== 'FACULTY') {
+        return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`}/>
+    }
     return (
 
         <div id="wd-quiz-editor w-100">

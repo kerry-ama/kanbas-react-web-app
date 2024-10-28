@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './labstyles.css';
 export default function ArrayStateVariable() {
   const [array, setArray] = useState([1, 2, 3, 4, 5]);
   const addElement = () => {
@@ -10,13 +11,13 @@ export default function ArrayStateVariable() {
   return (
     <div id="wd-array-state-variables">
       <h2>Array State Variable</h2>
-      <button onClick={addElement}>Add Element</button>
-      <ul>
+      <button className="btn btn-success mb-1 ms-1" onClick={addElement}>Add Element</button>
+      <ul className="list-group me-5 ms-1 w-25">
         {array.map((item, index) => (
-          <li key={index}>
-            {item}
+          <li className="list-group-item" key={index}>
+            <strong>{item}</strong>
             {"  "}
-            <button onClick={() => deleteElement(index)}
+            <button className="btn btn-danger ms-5 mb-2" onClick={() => deleteElement(index)}
                     id="wd-delete-element-click">
               Delete</button>
           </li>

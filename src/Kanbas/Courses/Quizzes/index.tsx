@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import * as db from "../../Database";
 import { RxRocket } from "react-icons/rx";
 export default function Quizzes() {
-    const assignments = db.assignments;
+    const assignments = db.quizzes;
     const { cid } = useParams();
     return (
         <div id="wd-assignments">

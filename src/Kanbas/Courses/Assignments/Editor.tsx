@@ -1,16 +1,33 @@
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import * as db from "../../Database";
 import Courses from "..";
+import { useSelector, useDispatch } from "react-redux";
+import { addAssignment, editAssignment,
+    updateAssignment, deleteAssignment }
+from "./reducer";
+
 
 export default function AssignmentEditor() {
+    //{ assignmentName, assignmentDescription, setAssignmentName, addAssignment }:
+
+    //{ assignmentName: string; assignmentDescription: string; setAssignmentName: (name: string) => void; addAssignment: () => void; }
     const {cid, aid} = useParams()
     console.log(aid)
-    const assignments = db.assignments;
+    //const assignments = db.assignments;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
-    
+    const users = db.users;
+    const assignments = db.assignments;
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    if (currentUser.role !== 'FACULTY') {
+        return <Navigate to={`/Kanbas/Courses/${cid}/Assignments`}/>
+    }
     console.log(course)
+    //const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+      //const dispatch = useDispatch();
+   
+
     return (
      
         <div id="wd-assignments-editor w-100">
@@ -24,8 +41,9 @@ export default function AssignmentEditor() {
                         <strong>Assignment Name</strong></label>
                     <div className="w-100 mb-3">
                         <input className="form-control"
-                            placeholder={`${assignment.title}`}
-                            id="wd-name" />
+                            placeholder={`${assignment.title}`}/>
+                            {/*id="wd-name" onChange={(e) => setAssignmentName(e.target.value)}/> */}
+                            
                     </div>
                 </div>
                 
@@ -119,17 +137,17 @@ export default function AssignmentEditor() {
                         <label htmlFor="wd-due-date">Due</label>
                         <input type="datetime-local"
                             id="wd-due-date"
-                            value={assignment.due} />
+                            defaultValue={assignment.due} />
 
                         <form>
                             <div className="row mt-1">
                                 <div className="col mt-1">
                                     <label className="form-label" htmlFor="wd-available-from"> Available From </label>
-                                    <input className="form-control w-60" type="datetime-local" id="wd-available-from" value={assignment.availability} />
+                                    <input className="form-control w-60" type="datetime-local" id="wd-available-from" defaultValue={assignment.availability} />
                                 </div>
                                 <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
-                                    <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" value={assignment.due} />
+                                    <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" defaultValue={assignment.due} />
                                 </div>
                             </div>
                         </form>

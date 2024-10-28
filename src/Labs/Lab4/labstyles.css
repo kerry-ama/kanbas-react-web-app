@@ -1,0 +1,11 @@
+.custom-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .custom-list li {
+    border: 1px solid #333; /* Add border around each list item */
+    padding: 10px; /* Add padding inside the border */
+    margin-bottom: 10px; /* Add space between the list items */
+    border-radius: 5px; /* Optional: make the corners rounded */
+  }
