@@ -6,15 +6,16 @@ import { unenrollCourse, enrollCourse }
 import { useDispatch, useSelector } from "react-redux";
 export default function Dashboard({
   courses, course, setCourse, addNewCourse,
-   deleteCourse, updateCourse }: {
+   deleteCourse, updateCourse,  }: {
    courses: any[]; course: any; setCourse: (course: any) => void;
    addNewCourse: () => void; deleteCourse: (course: any) => void;
-   updateCourse: () => void; })  {
+   updateCourse: () => void; enrollments: any[]})  {
   
    const { currentUser } = useSelector((state: any) => state.accountReducer);
    console.log("current user")
    console.log(currentUser)
-  const { enrollments } = db;
+  //const { enrollments } = db;
+  const [enrollments, setEnrollments] = useState<{ user: string; course: string }[]>([]);
   //const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   const dispatch = useDispatch();
   const [displayedCourses, setDisplayedCourses] = useState(courses);
@@ -38,7 +39,7 @@ export default function Dashboard({
       dispatch(enrollCourse({ userId: currentUser._id, courseId }));
     }
   };
-  */
+  
   const handleEnrollmentToggle = (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
     alert(courseId)
@@ -60,7 +61,29 @@ export default function Dashboard({
       }
     }
   };
-
+  */
+  const handleEnrollmentToggle = (courseId: string) => {
+    const payload = { userId: currentUser._id, courseId };
+    if (isEnrolled(courseId)) {
+      dispatch(unenrollCourse(payload));
+      setEnrollments((prevEnrollments) =>
+        prevEnrollments.filter((enrollment) => enrollment.course !== courseId)
+      );
+      setDisplayedCourses((courses) =>
+        courses.filter((course) => course._id !== courseId)
+      );
+    } else {
+      dispatch(enrollCourse(payload));
+      const courseToEnroll = courses.find((course) => course._id === courseId);
+      if (courseToEnroll) {
+        setEnrollments((prevEnrollments) => [
+          ...prevEnrollments,
+          { user: currentUser._id, course: courseId }
+        ]);
+        setDisplayedCourses((courses) => [...courses, courseToEnroll]);
+      }
+    }
+  };
  
  
 
