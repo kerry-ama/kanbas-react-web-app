@@ -6,9 +6,16 @@ import AssignmentControl from "./AssignmentControl";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
 import * as db from "../../Database";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
 export default function Assignments() {
   const assignments = db.assignments;
   const { cid } = useParams();
+  const [assignmentName, setAssignmentName] = useState("");
+ 
+  const { modules } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
   return (
     <div id="wd-assignments">
       <div className="row">
@@ -37,7 +44,10 @@ export default function Assignments() {
                 </Link><br /><BsGripVertical className="me-2 fs-3" /><MdAssignment className="me-4 fs-3 text-success"/>
                 <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link text-danger multiple-modules-link" >
                 Multiple Modules
-                </Link>  | <strong>Not available until</strong> {assignment.until} | <AssignmentControlButtons /><br />
+                </Link>  | <strong>Not available until</strong> {assignment.until} | <AssignmentControlButtons assignmentId={assignment._id}
+          deleteAssignment={(assignmentId) => {
+            dispatch(deleteAssignment(assignmentId));
+          }}/><br />
                 <div className="indented-text"><strong>Due</strong> {assignment.due_assign} | {assignment.points} pts</div>
                 
               </div>

@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import * as db from "../../Database";
 import Courses from "..";
@@ -6,19 +6,73 @@ import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, editAssignment,
     updateAssignment, deleteAssignment }
 from "./reducer";
+import { useState } from "react";
 
 
 export default function AssignmentEditor() {
     //{ assignmentName, assignmentDescription, setAssignmentName, addAssignment }:
 
     //{ assignmentName: string; assignmentDescription: string; setAssignmentName: (name: string) => void; addAssignment: () => void; }
+    const [assignmentName, setAssignmentName] = useState("");
     const {cid, aid} = useParams()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const assignments = db.assignments;
+
+    const newAssignments = useSelector((state: any) => state.assignmentsReducer);
+    //const existingAssignment = useSelector((state: any) =>
+      //  state.assignmentsReducer.assignments.find((assignment) => assignment._id === aid)
+      //);
+    
+    const existingAssignment = assignments.find((assignment: any) => assignment._id === aid);
+    
+
+    // Set up state for assignment fields, with defaults if it’s a new assignment
+    const [title, setTitle] = useState(existingAssignment ? existingAssignment.title : "");
+    const [description, setDescription] = useState(existingAssignment ? existingAssignment.description : "");
+    const [points, setPoints] = useState(existingAssignment ? existingAssignment.points : 0);
+    const [due, setDue] = useState(existingAssignment ? existingAssignment.due : "");
+    const [availableFrom, setAvailableFrom] = useState(existingAssignment ? existingAssignment.availability : "");
+    const [until, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
+
+
+   
+
+    const handleSave = () => {
+        const assignmentData = {
+            _id: aid === "new" ? new Date().getTime().toString() : aid,
+            title,
+            description,
+            points,
+            course: cid,  // Assign to the current course
+            availability: availableFrom,
+            due,
+            until,
+        };
+
+        // Dispatch the action based on whether it's a new assignment or an update
+        if (existingAssignment) {
+            dispatch(updateAssignment(assignmentData));
+          } else {
+            dispatch(addAssignment(assignmentData));
+          }
+
+        // Navigate back to the Assignments screen
+        navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    };
+
+    const handleCancel = () => {
+        // Redirect back to Assignments without saving
+        navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    };
+
+
     console.log(aid)
     //const assignments = db.assignments;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
     const users = db.users;
-    const assignments = db.assignments;
+    
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role !== 'FACULTY') {
         return <Navigate to={`/Kanbas/Courses/${cid}/Assignments`}/>
@@ -26,55 +80,73 @@ export default function AssignmentEditor() {
     console.log(course)
     //const { assignments } = useSelector((state: any) => state.assignmentsReducer);
       //const dispatch = useDispatch();
+   //write logic such that its new...state variables that 
+   const assignment = assignments.find((assignment) => assignment._id === aid);
    
-
+   
+    
+  
+    //save dispatch to the reducer
+    //fields editing useState
     return (
      
         <div id="wd-assignments-editor w-100">
             <form>
-            {assignments
-                .filter((assignment: any) => assignment._id === aid)
-                .map((assignment: any) => (
+            {/*{assignment && 
+                //.filter((assignment: any) => assignment._id === aid)
+                //.map((assignment: any) => (*/}
                 <div className="me-5">
                     <label htmlFor="wd-name" className="col-sm-10 ms-10">
                         
                         <strong>Assignment Name</strong></label>
                     <div className="w-100 mb-3">
                         <input className="form-control"
-                            placeholder={`${assignment.title}`}/>
-                            {/*id="wd-name" onChange={(e) => setAssignmentName(e.target.value)}/> */}
+                            //placeholder={`${assignment.title}`}
+                            value={title}
+                            placeholder={existingAssignment ? existingAssignment.description : "New Assignment Name"}
+                            //id="wd-name" onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => 
+                                dispatch(
+                                updateAssignment({ ...assignment, name: setTitle(e.target.value) }))}
+                            />
                             
                     </div>
                 </div>
                 
                 
             
-                ))}
+                {/*))}*/}
              
                  
                 <div className="me-5">
-                {assignments
-                .filter((assignment: any) => assignment._id === aid)
-                .map((assignment: any) => (
-                    <textarea className="form-control mb-3 w-100" rows={10} >
+                {/*{assignment && 
+                //.filter((assignment: any) => assignment._id === aid)
+                //.map((assignment: any) => (*/}
+                    <textarea className="form-control mb-3 w-100" rows={10} 
+                        value={description}
+                        placeholder={existingAssignment ? existingAssignment.title : "New Assignment Description"}
+                        onChange={(e) => setDescription(e.target.value)}
+                        
 
-                        {assignment.description}
-
-                    </textarea>
-                    ))}
+                    />
+                    {/*))}*/}
                 </div>
 
-                {assignments
-                .filter((assignment: any) => assignment._id === aid)
-                .map((assignment: any) => (
+                {/*{assignment && 
+                //.filter((assignment: any) => assignment._id === aid)
+                //.map((assignment: any) => (*/}
                 <div>
                     <div className="d-flex justify-content-end me-5">
                         <label htmlFor="wd-points">Points </label>
-                        <input id="wd-points" type="number" className="form-control ms-7 mb-3 w-50 ms-1" placeholder={`${assignment.points}`} />
+                        <input id="wd-points" type="number" 
+                        className="form-control ms-7 mb-3 w-50 ms-1" 
+                        value={points}
+                        onChange={(e) => setPoints(Number(e.target.value))} 
+                         />
                         
                     </div>
                 </div>
-                ))}
+                {/*))}*/}
                 <div className="d-flex justify-content-end me-5 mb-3">
                     <label htmlFor="wd-group">Assignment Group</label>
                     <select className="form-select w-50 ms-1" name="wd-group" id="wd-group">
@@ -124,9 +196,9 @@ export default function AssignmentEditor() {
                         </div>
                     </div>
                 </div>
-                {assignments
-                .filter((assignment: any) => assignment._id === aid)
-                .map((assignment: any) => (
+                {/*{assignment && 
+                //.filter((assignment: any) => assignment._id === aid)
+                //.map((assignment: any) => (*/}
                 <div className="d-flex justify-content-end me-5">
                     <label className="me-1" htmlFor="wd-assign">Assign </label>
                     <div className="card p-3 w-50">
@@ -137,30 +209,40 @@ export default function AssignmentEditor() {
                         <label htmlFor="wd-due-date">Due</label>
                         <input type="datetime-local"
                             id="wd-due-date"
-                            defaultValue={assignment.due} />
+                            value={due} 
+                            onChange={(e) => setDue(e.target.value)}  />
 
                         <form>
                             <div className="row mt-1">
                                 <div className="col mt-1">
                                     <label className="form-label" htmlFor="wd-available-from"> Available From </label>
-                                    <input className="form-control w-60" type="datetime-local" id="wd-available-from" defaultValue={assignment.availability} />
+                                    <input className="form-control w-60" type="datetime-local" id="wd-available-from" 
+                                    value={availableFrom} 
+                                    onChange={(e) => setAvailableFrom(e.target.value)}  />
                                 </div>
                                 <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
-                                    <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" defaultValue={assignment.due} />
+                                    <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" 
+                                    value={until} 
+                                    
+                                    onChange={(e) => setUntil(e.target.value)}
+                                    />
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                ))}
+                {/*))}*/}
             </form>
             <hr className="me-5" />
            
             <div className="float-end me-5">
+            
+            <button onClick={handleCancel} className="btn btn-secondary">Cancel</button>
+            <button onClick={handleSave} className="btn btn-danger">Save</button>
                
-                <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1" type="button">Cancel </Link>
-                <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger" type="button">Save</Link>
+                {/*<Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1" type="button">Cancel </Link>
+                <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger" type="button">Save</Link>*/}
             </div>
           
 
