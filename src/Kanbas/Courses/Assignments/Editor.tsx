@@ -33,8 +33,8 @@ export default function AssignmentEditor() {
     const [points, setPoints] = useState(existingAssignment ? existingAssignment.points : 0);
     const [due, setDue] = useState(existingAssignment ? existingAssignment.due : "");
     const [availableFrom, setAvailableFrom] = useState(existingAssignment ? existingAssignment.availability : "");
-    const [until, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
-    console.log(existingAssignment.until_editor)
+    const [until_editor, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
+    console.log(existingAssignment)
 
 
    
@@ -48,7 +48,7 @@ export default function AssignmentEditor() {
             course: cid,  // Assign to the current course
             availability: availableFrom,
             due,
-            until,
+            until_editor,
         };
         console.log(assignmentData)
 
@@ -230,7 +230,7 @@ export default function AssignmentEditor() {
                                 <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
                                     <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" 
-                                    value={until} 
+                                    defaultValue={until_editor} 
                                     
                                     onChange={(e) => setUntil(e.target.value)}
                                     />
