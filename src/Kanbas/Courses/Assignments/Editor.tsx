@@ -34,6 +34,7 @@ export default function AssignmentEditor() {
     const [due, setDue] = useState(existingAssignment ? existingAssignment.due : "");
     const [availableFrom, setAvailableFrom] = useState(existingAssignment ? existingAssignment.availability : "");
     const [until, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
+    console.log(existingAssignment.until_editor)
 
 
    
@@ -49,7 +50,7 @@ export default function AssignmentEditor() {
             due,
             until,
         };
-        console.log(assignmentData._id)
+        console.log(assignmentData)
 
         // Dispatch the action based on whether it's a new assignment or an update
         if (existingAssignment) {
