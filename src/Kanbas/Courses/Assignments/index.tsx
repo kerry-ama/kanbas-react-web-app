@@ -10,9 +10,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAssignment } from "./reducer";
 export default function Assignments() {
-  const assignments = db.assignments;
+  //const assignments = db.assignments;
   const { cid } = useParams();
   const [assignmentName, setAssignmentName] = useState("");
+  const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
  
   const { modules } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();

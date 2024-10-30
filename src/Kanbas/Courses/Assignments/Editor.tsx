@@ -17,14 +17,14 @@ export default function AssignmentEditor() {
     const {cid, aid} = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const assignments = db.assignments;
+    //const assignments = db.assignments;
 
-    const newAssignments = useSelector((state: any) => state.assignmentsReducer);
+    const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
     //const existingAssignment = useSelector((state: any) =>
       //  state.assignmentsReducer.assignments.find((assignment) => assignment._id === aid)
       //);
     
-    const existingAssignment = assignments.find((assignment: any) => assignment._id === aid);
+    const existingAssignment = assignments?.find((assignment: any) => assignment._id === aid);
     
 
     // Set up state for assignment fields, with defaults if it’s a new assignment
@@ -40,7 +40,7 @@ export default function AssignmentEditor() {
 
     const handleSave = () => {
         const assignmentData = {
-            _id: aid === "new" ? new Date().getTime().toString() : aid,
+            _id: aid === "new" || !aid ? new Date().getTime().toString() : aid,
             title,
             description,
             points,
@@ -49,12 +49,16 @@ export default function AssignmentEditor() {
             due,
             until,
         };
+        console.log(assignmentData._id)
 
         // Dispatch the action based on whether it's a new assignment or an update
         if (existingAssignment) {
             dispatch(updateAssignment(assignmentData));
+
+            
           } else {
             dispatch(addAssignment(assignmentData));
+            console.log(dispatch(addAssignment(assignmentData)))
           }
 
         // Navigate back to the Assignments screen
@@ -67,7 +71,7 @@ export default function AssignmentEditor() {
     };
 
 
-    console.log(aid)
+    //console.log(aid)
     //const assignments = db.assignments;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
@@ -77,11 +81,11 @@ export default function AssignmentEditor() {
     if (currentUser.role !== 'FACULTY') {
         return <Navigate to={`/Kanbas/Courses/${cid}/Assignments`}/>
     }
-    console.log(course)
+    //console.log(course)
     //const { assignments } = useSelector((state: any) => state.assignmentsReducer);
       //const dispatch = useDispatch();
    //write logic such that its new...state variables that 
-   const assignment = assignments.find((assignment) => assignment._id === aid);
+   //const assignment = assignments.find((assignment) => assignment._id === aid);
    
    
     
