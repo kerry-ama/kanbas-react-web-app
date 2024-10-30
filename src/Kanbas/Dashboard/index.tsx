@@ -9,13 +9,17 @@ export default function Dashboard({
    deleteCourse, updateCourse,  }: {
    courses: any[]; course: any; setCourse: (course: any) => void;
    addNewCourse: () => void; deleteCourse: (course: any) => void;
-   updateCourse: () => void; enrollments: any[]})  {
+   updateCourse: () => void; })  {
   
    const { currentUser } = useSelector((state: any) => state.accountReducer);
    console.log("current user")
    console.log(currentUser)
+
+
+   const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   //const { enrollments } = db;
-  const [enrollments, setEnrollments] = useState<{ user: string; course: string }[]>([]);
+  //const [enrollments, setEnrollments] = useState(db.enrollments);
+  //const [enrollments, setEnrollments] = useState<{ user: string; course: string }[]>([]);
   //const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   const dispatch = useDispatch();
   const [displayedCourses, setDisplayedCourses] = useState(courses);
@@ -62,6 +66,8 @@ export default function Dashboard({
     }
   };
   */
+
+  /*
   const handleEnrollmentToggle = (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
     if (isEnrolled(courseId)) {
@@ -82,6 +88,31 @@ export default function Dashboard({
         ]);
         setDisplayedCourses((courses) => [...courses, courseToEnroll]);
       }
+    }
+  };
+  */
+  const handleEnrollmentToggle = (courseId: string) => {
+    const payload = { userId: currentUser._id, courseId };
+    
+    if (isEnrolled(courseId)) {
+      dispatch(unenrollCourse(payload));
+      //setDisplayedCourses((prevCourses) => 
+        //prevCourses.filter((course) => course._id !== courseId)
+        
+      //);
+     
+    } else {
+     dispatch(enrollCourse(payload));
+      //const courseToEnroll = courses.find((course) => course._id === courseId);
+      //dispatch(enrollCourse(courseToEnroll));
+      //console.log(dispatch(enrollCourse(courseToEnroll)))
+      //console.log(courseToEnroll)
+      
+      //if (courseToEnroll) {
+        //setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
+        //console.log(setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]))
+
+      //}
     }
   };
  
@@ -126,7 +157,7 @@ export default function Dashboard({
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses
             .filter((course) => 
-              showAllCourses || isEnrolled(course._id)
+              showAllCourses || isEnrolled(course._id) || currentUser.role === "FACULTY"
             )
           
              /*} .filter((course) =>

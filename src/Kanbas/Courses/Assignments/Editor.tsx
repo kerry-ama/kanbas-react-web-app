@@ -104,10 +104,12 @@ export default function AssignmentEditor() {
                             //placeholder={`${assignment.title}`}
                             value={title}
                             placeholder={existingAssignment ? existingAssignment.description : "New Assignment Name"}
-                            //id="wd-name" onChange={(e) => setTitle(e.target.value)}
-                            onChange={(e) => 
-                                dispatch(
-                                updateAssignment({ ...assignment, name: setTitle(e.target.value) }))}
+                            id="wd-name"
+
+                           onChange={(e) => setTitle(e.target.value)}
+                            //onChange={(e) => 
+                              //  dispatch(
+                                //updateAssignment({ ...assignment, name: setTitle(e.target.value) }))}
                             />
                             
                     </div>

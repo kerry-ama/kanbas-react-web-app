@@ -9,10 +9,10 @@ import "./styles.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute";
-type Enrollment = { user: string; course: string };
+
 
 export default function Kanbas() {
-  const [enrollments, setEnrollments] = useState<Enrollment[]>(db.enrollments); 
+  //const [enrollments, setEnrollments] = useState<Enrollment[]>(db.enrollments); 
   const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number",
@@ -50,7 +50,7 @@ export default function Kanbas() {
               addNewCourse={addNewCourse}
               deleteCourse={deleteCourse}
               updateCourse={updateCourse}
-              enrollments={enrollments}
+              
               
               /></ProtectedRoute>} />
             <Route path="/Courses/*" element={<ProtectedRoute><Courses courses={courses}/></ProtectedRoute>} />

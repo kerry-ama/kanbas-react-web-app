@@ -10,19 +10,24 @@ const enrollmentsSlice = createSlice({
   initialState,
   reducers: {
     enrollCourse: (state, { payload: { userId, courseId } }) => {
-      const newEnrollment = {
+      
+        const newEnrollment = {
         _id: new Date().getTime().toString(),
         user: userId,
         course: courseId,
       };
-      state.enrollments = [...state.enrollments, newEnrollment];
+      state.enrollments = [...state.enrollments, newEnrollment] as any;
+      console.log(state.enrollments)
+      //state.modules = [...state.modules, newModule] as any;
     },
     unenrollCourse: (state, { payload: { userId, courseId } }) => {
         console.log("before" + state.enrollments)
-      state.enrollments = state.enrollments.filter(
-        (enrollment) => enrollment.user !== userId && enrollment.course !== courseId 
+      //state.enrollments = state.enrollments.filter(
+        //(enrollment) => enrollment.user !== userId && enrollment.course !== courseId 
+        state.enrollments = state.enrollments.filter(
+            (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
       );
-      //state.enrollments = [...state.enrollments];
+      state.enrollments = [...state.enrollments];
       console.log(state.enrollments)
     },
   },
