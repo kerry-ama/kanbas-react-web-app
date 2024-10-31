@@ -17,7 +17,7 @@ export default function Lab4() {
     function sayHello() {
         alert("Hello");
       }
-    
+
     return(
     <div>
         <h2>Lab 4</h2>
@@ -33,8 +33,8 @@ export default function Lab4() {
         <ArrayStateVariable />
         <ParentStateComponent />
         <ReduxExamples />
-        
-        
+
+         
     </div>
 
     );
