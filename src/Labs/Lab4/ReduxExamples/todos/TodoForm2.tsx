@@ -6,7 +6,7 @@ export default function TodoForm({ todo, setTodo, addTodo, updateTodo }: {
 }) {
   return (
     <li className="list-group-item">
-      <input className="me-4" defaultValue={todo.title}
+      <input className="me-4" value={todo.title}
         onChange={(e) => setTodo({ ...todo, title: e.target.value })} />
       <button  onClick={() => updateTodo(todo)}
         className="btn btn-warning me-1" id="wd-update-todo-click"> Update </button>

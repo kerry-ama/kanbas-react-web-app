@@ -8,7 +8,7 @@ export default function TodoForm3(
     return (
         <li className="list-group-item">
             <input className="me-4"
-                defaultValue={todo.title}
+                value={todo.title}
                 onChange={(e) => dispatch(setTodo({ ...todo, title: e.target.value }))}
             />
             <button onClick={() => dispatch(updateTodo(todo))}

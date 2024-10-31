@@ -27,7 +27,7 @@ export default function TodoList() {
       <h2>Todo List - REACT</h2>
       <ul className="list-group">
         <li className="list-group-item">
-        <input className="me-4" defaultValue={todo.title}
+        <input className="me-4" value={todo.title}
             onChange={(e) =>
               setTodo({ ...todo,
                 title: e.target.value })
