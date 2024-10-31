@@ -230,7 +230,7 @@ export default function AssignmentEditor() {
                                 <div className="col mt-1">
                                     <label htmlFor="wd-available-until">Until</label>
                                     <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" 
-                                    defaultValue={until_editor} 
+                                    value={until_editor} 
                                     
                                     onChange={(e) => setUntil(e.target.value)}
                                     />
