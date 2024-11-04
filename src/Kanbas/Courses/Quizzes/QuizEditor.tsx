@@ -1,15 +1,26 @@
-import { Navigate, useParams } from "react-router";
+import { Navigate, useParams, useNavigate } from "react-router";
 import { Link, Route } from "react-router-dom";
 import * as db from "../../Database";
 import Courses from "..";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function QuizEditor() {
     const { cid, aid, qid, qeid } = useParams()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(aid)
-    const assignments = db.quizzes;
+    //const quizzes = db.quizzes;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
+
+    const quizzes = useSelector((state: any) => state.quizzesReducer.quizzes);
+    const existingQuiz = quizzes?.find((quiz: any) => quiz._id === qid);
+
+    const [title, setTitle] = useState(existingQuiz ? existingQuiz.title : "");
+    const [description, setDescription] = useState(existingQuiz ? existingQuiz.description : "");
+    const [points, setPoints] = useState(existingQuiz ? existingQuiz.points : 0);
+    
 
     console.log(course)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -21,51 +32,53 @@ export default function QuizEditor() {
         <div id="wd-quiz-editor w-100">
             <form>
 
-                {assignments
+                {/*{quizzes
                     .filter((assignment: any) => assignment._id === qid)
-                    .map((assignment: any) => (
+                    .map((assignment: any) => (*/}
                         <div className="me-5">
                             <div id="wd-css-navigating-with-tabs">
                                 <hr />
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
-                                        <Link className="nav-link active" to={`/Kanbas/Courses/RS101/Quizzes/${qid}`}>Details</Link>
+                                        <Link className="nav-link active" to={`/Kanbas/Courses/${cid}/Quizzes/${qid}`}>Details</Link>
                                     </li>
                                     <li className="nav-item">
 
-                                        <Link className="nav-link" to={`/Kanbas/Courses/RS101/Quizzes/${qid}/QE101`}>Questions</Link>
+                                        <Link className="nav-link" to={`/Kanbas/Courses/${cid}/Quizzes/${qid}/QE101`}>Questions</Link>
                                     </li>
 
                                 </ul>
                             </div>
-                            <label htmlFor="wd-name" className="col-sm-10 ms-10">
+                            <label htmlFor="wd-quiz-name" className="col-sm-10 ms-10">
 
                             </label>
                             <div className="w-100 mb-3">
                                 <input className="form-control"
-                                    placeholder={`${assignment.title}`}
-                                    id="wd-name" />
+                                    value={title}
+                                    placeholder={existingQuiz ? existingQuiz.description : "New Quiz Name"}
+                                    id="wd-quiz-name" />
                             </div>
                         </div>
 
 
 
-                    ))}
+                    {/*))}*/}
 
 
                 <div className="me-5">
-                    {assignments
+                    {/*{quizzes
                         .filter((assignment: any) => assignment._id === qid)
-                        .map((assignment: any) => (
-                            <textarea className="form-control mb-3 w-100" rows={10} >
+                        .map((assignment: any) => (*/}
+                            <textarea className="form-control mb-3 w-100" rows={10} 
+                                value={description}
+                                placeholder={existingQuiz ? existingQuiz.description : "New Quiz Description"}
+                                onChange={(e) => setDescription(e.target.value)}
 
-                                {assignment.description}
-
-                            </textarea>
-                        ))}
+                            />
+                        {/*))}*/}
                 </div>
                 <div id="quiz-editor-grid">
-                    {assignments
+                    {quizzes
                         .filter((assignment: any) => assignment._id === qid)
                         .map((assignment: any) => (
                             <div>
@@ -124,7 +137,7 @@ export default function QuizEditor() {
 
                         
                     </div>
-                    {assignments
+                    {quizzes
                         .filter((assignment: any) => assignment._id === qid)
                         .map((assignment: any) => (
                             <div className="row justify-content-center ms-5">
@@ -164,12 +177,12 @@ export default function QuizEditor() {
             <div className="row justify-content-center">
                 <div className="col-1">
                     <hr />
-                <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1" type="button">Cancel </Link>
+                <Link to={`/Kanbas/Courses/${cid}/Quizzes`} className="btn btn-secondary me-1" type="button">Cancel </Link>
                 <hr />
                 </div>
                 <div className="col-1">
                     <hr />
-                    <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger" type="button">Save</Link>
+                    <Link to={`/Kanbas/Courses/${cid}/Quizzes`} className="btn btn-danger" type="button">Save</Link>
                     <hr />
                 </div>
             </div>

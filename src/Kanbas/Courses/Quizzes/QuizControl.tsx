@@ -3,8 +3,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-export default function AssignmentControl() {
+import { useNavigate, useParams } from "react-router";
+export default function QuizControl() {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const {cid, qid} = useParams();
+    const navigate = useNavigate();
+    const addQuiz = () => {
+        navigate(`/Kanbas/Courses/${cid}/Quizzes/new`);
+    }
     return (
         <div id="wd-assignment-controls" className="text-nowrap">
             {currentUser.role === "FACULTY" &&
@@ -12,7 +18,7 @@ export default function AssignmentControl() {
         <BsThreeDotsVertical className="position-relative" style={{ bottom: "1px" }} />
         </button>}
         {currentUser.role === "FACULTY" &&   
-            <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
+            <button onClick={addQuiz} id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Quiz</button>}
         

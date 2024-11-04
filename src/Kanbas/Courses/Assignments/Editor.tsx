@@ -131,7 +131,7 @@ export default function AssignmentEditor() {
                 //.map((assignment: any) => (*/}
                     <textarea className="form-control mb-3 w-100" rows={10} 
                         value={description}
-                        placeholder={existingAssignment ? existingAssignment.title : "New Assignment Description"}
+                        placeholder={existingAssignment ? existingAssignment.description : "New Assignment Description"}
                         onChange={(e) => setDescription(e.target.value)}
                         
 
