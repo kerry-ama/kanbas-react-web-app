@@ -7,10 +7,22 @@ import { useParams } from "react-router";
 import * as db from "../../Database";
 import { RxRocket } from "react-icons/rx";
 export default function Quizzes() {
-    const assignments = db.quizzes;
+    const quizzes = db.quizzes;
     const { cid } = useParams();
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+      };
     return (
-        <div id="wd-assignments">
+        <div id="wd-quizzes">
             <div className="row">
                 <QuizControl />
             </div>
@@ -22,8 +34,8 @@ export default function Quizzes() {
                         
                         
                     </div>
-                    <ul className="wd-assignments-list list-group rounded-0">
-                        {assignments
+                    <ul className="wd-quizzes-list list-group rounded-0">
+                        {quizzes
 
                             .filter((assignment: any) => assignment.course === cid)
                             .map((assignment: any) => (
@@ -36,8 +48,8 @@ export default function Quizzes() {
                                         </Link><br /><BsGripVertical className="me-2 fs-3" /><RxRocket className="me-4 fs-3 text-success" />
                                         <Link to={`/Kanbas/Courses/${cid}/Quizzes/${assignment._id}`} className="wd-assignment-link text-danger multiple-modules-link" >
                                             Multiple Modules
-                                        </Link>  | <strong>Not available until</strong> {assignment.until} | <QuizControlButtons /><br />
-                                        <div className="indented-text"><strong>Due</strong> {assignment.due_assign} | {assignment.points} pts</div>
+                                        </Link>  | <strong>Not available until</strong> {formatDate(assignment.availability)} | <QuizControlButtons /><br />
+                                        <div className="indented-text"><strong>Due</strong> {formatDate(assignment.due)} | {assignment.points} pts</div>
 
                                     </div>
 

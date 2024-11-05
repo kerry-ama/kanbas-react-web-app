@@ -108,7 +108,7 @@ export default function AssignmentEditor() {
                         <input className="form-control"
                             //placeholder={`${assignment.title}`}
                             value={title}
-                            placeholder={existingAssignment ? existingAssignment.description : "New Assignment Name"}
+                            placeholder={existingAssignment ? existingAssignment.title : "New Assignment Name"}
                             id="wd-name"
 
                            onChange={(e) => setTitle(e.target.value)}

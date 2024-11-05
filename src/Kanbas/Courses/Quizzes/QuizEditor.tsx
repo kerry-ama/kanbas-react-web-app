@@ -10,6 +10,8 @@ export default function QuizEditor() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log(aid)
+
+    
     //const quizzes = db.quizzes;
     const courses = db.courses;
     const course = courses.find((course) => course._id === cid);
@@ -20,7 +22,9 @@ export default function QuizEditor() {
     const [title, setTitle] = useState(existingQuiz ? existingQuiz.title : "");
     const [description, setDescription] = useState(existingQuiz ? existingQuiz.description : "");
     const [points, setPoints] = useState(existingQuiz ? existingQuiz.points : 0);
-    
+    const [due, setDue] = useState(existingQuiz ? existingQuiz.due : "");
+    const [availableFrom, setAvailableFrom] = useState(existingQuiz ? existingQuiz.availability : "");
+    const [until, setUntil] = useState(existingQuiz ? existingQuiz.until : "");
 
     console.log(course)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -55,7 +59,7 @@ export default function QuizEditor() {
                             <div className="w-100 mb-3">
                                 <input className="form-control"
                                     value={title}
-                                    placeholder={existingQuiz ? existingQuiz.description : "New Quiz Name"}
+                                    placeholder={existingQuiz ? existingQuiz.title : "New Quiz Name"}
                                     id="wd-quiz-name" />
                             </div>
                         </div>
@@ -77,10 +81,11 @@ export default function QuizEditor() {
                             />
                         {/*))}*/}
                 </div>
+                
                 <div id="quiz-editor-grid">
-                    {quizzes
+                    {/*{quizzes
                         .filter((assignment: any) => assignment._id === qid)
-                        .map((assignment: any) => (
+                        .map((assignment: any) => (*/}
                             <div>
                                 <div className="row justify-content-center">
                                     <div className="col-2 float-end">
@@ -97,7 +102,7 @@ export default function QuizEditor() {
 
                                 </div>
                             </div>
-                        ))}
+                        {/*))}*/}
                     <div className="row justify-content-center mb-3">
                         <div className="col-2 float-end">
                             <label htmlFor="wd-group">Assignment Group</label>
@@ -137,9 +142,9 @@ export default function QuizEditor() {
 
                         
                     </div>
-                    {quizzes
+                    {/*{quizzes
                         .filter((assignment: any) => assignment._id === qid)
-                        .map((assignment: any) => (
+                        .map((assignment: any) => (*/}
                             <div className="row justify-content-center ms-5">
                                 <div className="col-2">
                                     <label className="me-5" htmlFor="wd-assign">Assign </label>
@@ -152,24 +157,32 @@ export default function QuizEditor() {
                                     <label htmlFor="wd-due-date"><strong>Due</strong></label>
                                     <input type="datetime-local"
                                         id="wd-due-date"
-                                        value={assignment.due} />
+                                        value={due}
+                                        onChange={(e) => setDue(e.target.value)}   />
 
                                     <form>
                                         <div className="row mt-1">
                                             <div className="col-5 mt-1">
                                                 <label className="form-label" htmlFor="wd-available-from"> Available From </label>
-                                                <input className="form-control w-60" type="datetime-local" id="wd-available-from" value={assignment.availability} />
+                                                <input className="form-control w-60" type="datetime-local" id="wd-available-from" 
+                                                value={availableFrom} 
+                                                onChange={(e) => setAvailableFrom(e.target.value)} 
+                                                 />
                                             </div>
-                                            <div className="col-5 mt-1">
+                                            <div className="col-5 mt-1 mb-2">
                                                 <label htmlFor="wd-available-until">Until</label>
-                                                <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" value={assignment.due} />
+                                                <input className="form-control w-60 mt-2" type="datetime-local" id="wd-available-until" 
+                                                value={until}
+                                                onChange={(e) => setUntil(e.target.value)}  />
                                             </div>
                                         </div>
                                     </form>
-                                    <button>+ Add</button>
+                                    <span className="justify-content-center">
+                                    <button style={{ width: '550px' }}>+ Add</button>
+                                    </span>
                                 </div>
                             </div>
-                        ))}
+                        {/*))}*/}
                 </div>
             </form>
             
