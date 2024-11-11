@@ -44,6 +44,21 @@ export default function WorkingWithArrays() {
             <input defaultValue={todo.title} className="form-control w-50 float-start"
                 onChange={(e) => setTodo({ ...todo, title: e.target.value })} />
             <br /><br /><hr />
+            <a href={`${API}/${todo.id}/description/${todo.description}`} className="btn btn-primary float-end">
+                Update Todo Description</a>
+            <input defaultValue={todo.id} className="form-control w-25 float-start me-2"
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })} />
+            <input defaultValue={todo.description} className="form-control w-50 float-start"
+                onChange={(e) => setTodo({ ...todo, description: e.target.value })} />
+            <br /><br /><hr />
+            <a href={`${API}/${todo.id}/completed/${todo.completed}`} className="btn btn-primary float-end">
+                Update Todo Completed</a>
+            <input defaultValue={todo.id} className="form-control w-25 float-start me-2"
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })} />
+            <input type="checkbox" checked={todo.completed} 
+                onChange={(e) => setTodo({ ...todo, completed: e.target.checked })} />
+            <br /><br /><hr />
+
 
 
         </div>

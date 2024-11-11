@@ -108,7 +108,7 @@ export default function AssignmentEditor() {
                         <input className="form-control"
                             //placeholder={`${assignment.title}`}
                             value={title}
-                            placeholder={existingAssignment ? existingAssignment.description : "New Assignment Name"}
+                            placeholder={existingAssignment ? existingAssignment.title : "New Assignment Name"}
                             id="wd-name"
 
                            onChange={(e) => setTitle(e.target.value)}
@@ -131,7 +131,7 @@ export default function AssignmentEditor() {
                 //.map((assignment: any) => (*/}
                     <textarea className="form-control mb-3 w-100" rows={10} 
                         value={description}
-                        placeholder={existingAssignment ? existingAssignment.title : "New Assignment Description"}
+                        placeholder={existingAssignment ? existingAssignment.description : "New Assignment Description"}
                         onChange={(e) => setDescription(e.target.value)}
                         
 
