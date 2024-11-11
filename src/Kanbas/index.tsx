@@ -9,7 +9,7 @@ import "./styles.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute";
-
+import Session from "./Account/Session";
 
 export default function Kanbas() {
   //const [enrollments, setEnrollments] = useState<Enrollment[]>(db.enrollments); 
@@ -38,6 +38,7 @@ export default function Kanbas() {
 
   return (
     <Provider store={store}>
+          <Session>
       <div id="wd-kanbas">
         <KanbasNavigation />
         <div className="wd-main-content-offset p-3">
@@ -62,6 +63,7 @@ export default function Kanbas() {
 
 
       </div>
+      </Session>
     </Provider>
 
   );

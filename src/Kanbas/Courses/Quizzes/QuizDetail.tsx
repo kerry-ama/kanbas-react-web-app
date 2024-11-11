@@ -7,7 +7,7 @@ export default function QuizDetail() {
     console.log(qid)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role !== 'FACULTY') {
-        return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`}/>
+        return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`} />
     }
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -40,7 +40,7 @@ export default function QuizDetail() {
                     </div>
 
                 ))}
-            <br />   
+            <br />
             {quizzes
                 .filter((quiz: any) => quiz._id === qid)
                 .map((quiz: any) => (
@@ -94,14 +94,14 @@ export default function QuizDetail() {
                             <div>{quiz.lock_questions}</div>
                         </div>
 
-                        
+
 
 
                     </div>
 
                 ))}
-                <hr />
-                {quizzes
+            <hr />
+            {quizzes
                 .filter((quiz: any) => quiz._id === qid)
                 .map((quiz: any) => (
                     
@@ -145,7 +145,6 @@ export default function QuizDetail() {
                 <hr />
 
 
-         
         </div>
     );
 
