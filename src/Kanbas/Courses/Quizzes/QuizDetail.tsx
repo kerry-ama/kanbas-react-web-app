@@ -7,8 +7,20 @@ export default function QuizDetail() {
     console.log(qid)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role !== 'FACULTY') {
-        return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`}/>
+        return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`} />
     }
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    };
     return (
         <div id="quiz-details">
 
@@ -29,7 +41,7 @@ export default function QuizDetail() {
                     </div>
 
                 ))}
-            <br />   
+            <br />
             {quizzes
                 .filter((quiz: any) => quiz._id === qid)
                 .map((quiz: any) => (
@@ -83,36 +95,82 @@ export default function QuizDetail() {
                             <div>{quiz.lock_questions}</div>
                         </div>
 
-                        
+
 
 
                     </div>
 
                 ))}
-                <hr />
-                {quizzes
+            <hr />
+            {quizzes
                 .filter((quiz: any) => quiz._id === qid)
                 .map((quiz: any) => (
-                    
-                    <div className="row" style={{ position: "absolute", bottom: "60px", left: "0", right: "0" }}>
-                        
-                        <div className="col-8 text-center">
-                            <div className="col"><strong>Due</strong></div>
-                            <div >{quiz.due}</div>
-                            
+                    <div className="container">
+                        {/* Labels Row */}
+                        <div className="row justify-content-center">
+                            <div className="col-3 text-center">
+                                <label><strong>Due</strong></label>
+                            </div>
+                            <div className="col-3 text-center">
+                                <label><strong>For</strong></label>
+                            </div>
+                            <div className="col-3 text-center">
+                                <label><strong>Available From</strong></label>
+                            </div>
+                            <div className="col-3 text-center">
+                                <label><strong>Until</strong></label>
+                            </div>
                         </div>
-                        
+                        <hr />
 
-
-
+                        {/* Data Row */}
+                        <div className="row justify-content-center mt-3">
+                            <div className="col-3 text-center">
+                                <p>{formatDate(quiz.due)}</p>
+                            </div>
+                            <div className="col-3 text-center">
+                                <p>Everyone</p>
+                            </div>
+                            <div className="col-3 text-center">
+                                <p>{formatDate(quiz.availability)}</p>
+                            </div>
+                            <div className="col-3 text-center">
+                                <p>{formatDate(quiz.until)}</p>
+                            </div>
+                        </div>
                     </div>
-                   
-                ))}  
-                <br />   
-                <hr />
+
+                    /*<div className="container">
+                        <div className="row" style={{ position: "absolute", bottom: "60px", left: "0", right: "0" }}>
+
+                            <div className="col-4 text-center">
+                                <div className="col"><strong>Due</strong></div>
 
 
-         
+                                <div >{formatDate(quiz.due)}</div>
+
+                            </div>
+                            <div className="col-4 text-center">
+                                <label>Due</label>
+                            </div>
+                            <div className="col-8"></div>
+                            
+                            
+
+
+
+
+
+
+                        </div>
+                    </div>*/
+
+                ))}
+          
+            <hr />
+
+
+
         </div>
     );
 
