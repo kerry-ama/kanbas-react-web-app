@@ -6,6 +6,7 @@ export default function QuizQuestionEditor() {
     const { cid, aid, qid, qeid } = useParams()
     const assignments = db.assignments;
 
+
     return (
 
         <div id="wd-quiz-question-editor">
@@ -22,13 +23,13 @@ export default function QuizQuestionEditor() {
 
                 </ul>
             </div>
-            <p>Hellow World</p>
+            <button className="justify-content-center">
+                    <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />New Question
+            </button>
             {assignments
                 .filter((assignment: any) => assignment._id === qeid)
                 .map((assignment: any) => (
-                    <button>
-                        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />New Question
-                    </button>
+                <p>Hi</p>
                 ))}
         </div>
     );
