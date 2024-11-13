@@ -24,11 +24,23 @@ export default function Dashboard({
   const dispatch = useDispatch();
   const [displayedCourses, setDisplayedCourses] = useState(courses);
   const [showAllCourses, setShowAllCourses] = useState(false);
+  
 
   const isStudent = currentUser.role === "STUDENT";
 
   // Toggle showing all courses vs only enrolled courses for students
+  //db call fetch courses then set
   const toggleEnrollmentView = () => setShowAllCourses(!showAllCourses);
+  /*
+  const toggleEnrollmentView = async () => {
+    if (showAllCourses) {
+      dispatch(await fetchAllCourses())
+    } else {
+    setShowAllCourses(!showAllCourses);
+    }
+  }; 
+  */
+  
 
   // Check if the student is enrolled in a course
   const isEnrolled = (courseId: string) =>
@@ -93,7 +105,7 @@ export default function Dashboard({
   */
   const handleEnrollmentToggle = (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
-    
+    console.log(payload)
     if (isEnrolled(courseId)) {
       dispatch(unenrollCourse(payload));
       //setDisplayedCourses((prevCourses) => 

@@ -4,22 +4,41 @@ import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
 import Courses from "./Courses";
 import * as db from "./Database";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import store from "./store";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
+import * as userClient from "./Account/client";
 
 export default function Kanbas() {
-  //const [enrollments, setEnrollments] = useState<Enrollment[]>(db.enrollments); 
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  //const [courses, setCourses] = useState<any[]>(db.courses);
+  const [courses, setCourses] = useState<any[]>([]);
+  
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const fetchCourses = async () => {
+    let courses = [];
+    try {
+      courses = await userClient.findMyCourses();
+    } catch (error) {
+      console.error(error);
+    }
+    setCourses(courses);
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, [currentUser]);
+  
+
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number", image: "/images/reactjs.jpg",
     startDate: "2023-09-10", endDate: "2023-12-15", description: "New Description",
   });
-  const addNewCourse = () => {
-    setCourses([...courses, { ...course, _id: new Date().getTime().toString() }]);
+  const addNewCourse = async () => {
+    const newCourse = await userClient.createCourse(course);
+    setCourses([ ...courses, newCourse ]);
+    //setCourses([...courses, { ...course, _id: new Date().getTime().toString() }]);
   };
   const deleteCourse = (courseId: any) => {
     setCourses(courses.filter((course) => course._id !== courseId));
@@ -37,7 +56,7 @@ export default function Kanbas() {
   };
 
   return (
-    <Provider store={store}>
+    //<Provider store={store}>
           <Session>
       <div id="wd-kanbas">
         <KanbasNavigation />
@@ -64,7 +83,7 @@ export default function Kanbas() {
 
       </div>
       </Session>
-    </Provider>
+    //</Provider>
 
   );
 }
