@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import * as db from "../../Database";
 import Courses from "..";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment, editAssignment,
+import { setAssignments, addAssignment, editAssignment,
     updateAssignment, deleteAssignment }
 from "./reducer";
 import { useState } from "react";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 
 
 export default function AssignmentEditor() {
@@ -36,8 +38,61 @@ export default function AssignmentEditor() {
     const [until_editor, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
     console.log(existingAssignment)
 
+    /*
+    const createAssignmentForCourse = async () => {
+        if (!cid) return;
+        const newAssignment = { name: assignmentName, course: cid };
+        const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+        dispatch(addAssignment(assignment));
+      };
+      */
+      const saveAssignment = async (assignment: any) => {
+        await assignmentsClient.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+      };
+    
 
-   
+      const handleSave2 = async () => {
+        if (!cid) return;
+        const newAssignment = { course: cid, title, description,
+            points,
+            availability: availableFrom,
+            due,
+            until_editor, };
+        
+        //console.log(assignment);
+
+        const assignmentData = {
+            _id: aid === "new" || !aid ? new Date().getTime().toString() : aid,
+            title,
+            description,
+            points,
+            course: cid,  // Assign to the current course
+            availability: availableFrom,
+            due,
+            until_editor,
+        };
+        
+
+        // Dispatch the action based on whether it's a new assignment or an update
+        console.log(existingAssignment);
+        if (existingAssignment) {
+            //dispatch(updateAssignment(assignmentData));
+            saveAssignment(assignmentData);
+            //saveAssignment({...assignment, editing: false});
+           
+
+            
+          } else {
+            const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+            dispatch(addAssignment(assignment));
+            console.log(dispatch(addAssignment(assignmentData)))
+          }
+
+        // Navigate back to the Assignments screen
+        navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    };
+    
 
     const handleSave = () => {
         const assignmentData = {
@@ -246,7 +301,7 @@ export default function AssignmentEditor() {
             <div className="float-end me-5">
             
             <button onClick={handleCancel} className="btn btn-secondary">Cancel</button>
-            <button onClick={handleSave} className="btn btn-danger">Save</button>
+            <button onClick={handleSave2} className="btn btn-danger">Save</button>
                
                 {/*<Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1" type="button">Cancel </Link>
                 <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger" type="button">Save</Link>*/}

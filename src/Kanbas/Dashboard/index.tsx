@@ -1,120 +1,140 @@
 import { Link } from "react-router-dom";
 import * as db from "../Database";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { unenrollCourse, enrollCourse }
   from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchEnrollments } from "./client";
+import { fetchAllCourses } from "../Courses/client";
+import * as coursesClient from "../Courses/client";
+import * as dashboardClient from "./client";
 export default function Dashboard({
   courses, course, setCourse, addNewCourse,
-   deleteCourse, updateCourse,  }: {
+   deleteCourse, updateCourse, allCourses, setAllCourses, enrollments2, setEnrollments }: {
    courses: any[]; course: any; setCourse: (course: any) => void;
    addNewCourse: () => void; deleteCourse: (course: any) => void;
-   updateCourse: () => void; })  {
+   updateCourse: () => void; allCourses: any[]; setAllCourses: (allCourses: any) => void;
+    enrollments2: any[]; setEnrollments: (enrollments: any) => void;})  {
   
    const { currentUser } = useSelector((state: any) => state.accountReducer);
    console.log("current user")
    console.log(currentUser)
 
 
-   const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
+   //const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   //const { enrollments } = db;
   //const [enrollments, setEnrollments] = useState(db.enrollments);
   //const [enrollments, setEnrollments] = useState<{ user: string; course: string }[]>([]);
-  //const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
+  const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   const dispatch = useDispatch();
   const [displayedCourses, setDisplayedCourses] = useState(courses);
-  const [showAllCourses, setShowAllCourses] = useState(false);
+  const [showAllCourses, setShowAllCourses] = useState(true);
+
+
+  
+  const [showAll, setAll] = useState(allCourses);
+
+  console.log(showAllCourses);
+
+  useEffect(() => {
+    const initializeEnrollments = async () => {
+      try {
+        const enrollments = await fetchEnrollments(currentUser._id);
+        dispatch({ type: "SET_ENROLLMENTS", payload: enrollments });
+      } catch (error) {
+        console.error("Error fetching enrollments:", error);
+      }
+    };
+  
+    initializeEnrollments();
+  }, [currentUser._id, dispatch]);
   
 
   const isStudent = currentUser.role === "STUDENT";
 
   // Toggle showing all courses vs only enrolled courses for students
   //db call fetch courses then set
-  const toggleEnrollmentView = () => setShowAllCourses(!showAllCourses);
+  //const toggleEnrollmentView = () => setShowAllCourses(!showAllCourses);
+  console.log(showAllCourses);
   /*
   const toggleEnrollmentView = async () => {
     if (showAllCourses) {
-      dispatch(await fetchAllCourses())
+      dispatch(allCourses)
     } else {
     setShowAllCourses(!showAllCourses);
     }
   }; 
   */
+  const fetchAllCourses = async () => {
+    try {
+      const courses = await coursesClient.fetchAllCourses();
+      setAllCourses(courses);
+      setDisplayedCourses(courses); // Initialize displayed courses with all courses
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleEnrollmentView = async () => {
+    if (showAllCourses) {
+      try {
+        // Fetch enrollments for the current user
+        const enrollments = await fetchEnrollments(currentUser._id);
+        const enrolledCourseIds = enrollments.map((enrollment: any) => enrollment.course);
+  
+        // Display only enrolled courses
+        setDisplayedCourses(courses.filter((course: any) =>
+          enrolledCourseIds.includes(course._id)
+        ));
+      } catch (error) {
+        console.error("Error fetching enrollments:", error);
+      }
+    } else {
+      // Display all courses
+      //const all = await fetchAllCourses();
+      //setDisplayedCourses(all);
+      console.log("else ")
+      setAllCourses(allCourses);
+      console.log(allCourses)
+      
+    }
+    setShowAllCourses(!showAllCourses); // Toggle the view state
+  };
+  
   
 
   // Check if the student is enrolled in a course
+ 
+
   const isEnrolled = (courseId: string) =>
     enrollments.some((enrollment: any) => enrollment.user === currentUser._id && enrollment.course === courseId);
+  console.log("ENROLLMENTS", enrollments);
+  console.log(currentUser);
+ 
 
-  // Handle enrollment button click
-  /*
-  const handleEnrollmentToggle = (courseId: string) => {
-    if (isEnrolled(courseId)) {
-      dispatch(unenrollCourse({ userId: currentUser._id, courseId }));
-    } else {
-      dispatch(enrollCourse({ userId: currentUser._id, courseId }));
-    }
-  };
+
+
   
-  const handleEnrollmentToggle = (courseId: string) => {
-    const payload = { userId: currentUser._id, courseId };
-    alert(courseId)
-    if (isEnrolled(courseId)) {
-      alert(courseId)
-      dispatch(unenrollCourse(payload));
-      console.log(displayedCourses)
-      // Remove the course from displayed courses
-      setDisplayedCourses((courses) =>
-        courses.filter((course) => course._id !== courseId)
-      );
-      console.log(displayedCourses)
-    } else {
-      dispatch(enrollCourse(payload));
-      // Add the course to displayed courses
-      const courseToEnroll = courses.find((course) => course._id === courseId);
-      if (courseToEnroll) {
-        setDisplayedCourses((courses) => [...courses, courseToEnroll]);
-      }
-    }
-  };
-  */
-
-  /*
-  const handleEnrollmentToggle = (courseId: string) => {
-    const payload = { userId: currentUser._id, courseId };
-    if (isEnrolled(courseId)) {
-      dispatch(unenrollCourse(payload));
-      setEnrollments((prevEnrollments) =>
-        prevEnrollments.filter((enrollment) => enrollment.course !== courseId)
-      );
-      setDisplayedCourses((courses) =>
-        courses.filter((course) => course._id !== courseId)
-      );
-    } else {
-      dispatch(enrollCourse(payload));
-      const courseToEnroll = courses.find((course) => course._id === courseId);
-      if (courseToEnroll) {
-        setEnrollments((prevEnrollments) => [
-          ...prevEnrollments,
-          { user: currentUser._id, course: courseId }
-        ]);
-        setDisplayedCourses((courses) => [...courses, courseToEnroll]);
-      }
-    }
-  };
-  */
-  const handleEnrollmentToggle = (courseId: string) => {
+  const handleEnrollmentToggle = async (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
     console.log(payload)
     if (isEnrolled(courseId)) {
+      //dispatch(unenrollCourse(payload));
+      await dashboardClient.unenrollUserFromCourse(currentUser._id, courseId);
       dispatch(unenrollCourse(payload));
-      //setDisplayedCourses((prevCourses) => 
-        //prevCourses.filter((course) => course._id !== courseId)
-        
-      //);
+      setDisplayedCourses((prevCourses) =>
+        prevCourses.filter((course) => course._id !== courseId)
+      );
      
     } else {
-     dispatch(enrollCourse(payload));
+     //dispatch(enrollCourse(payload));
+
+     await dashboardClient.enrollUserInCourse(currentUser._id, courseId);
+      dispatch(enrollCourse(payload));
+      const courseToEnroll = courses.find((course) => course._id === courseId);
+      if (courseToEnroll) {
+        setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
+      }
       //const courseToEnroll = courses.find((course) => course._id === courseId);
       //dispatch(enrollCourse(courseToEnroll));
       //console.log(dispatch(enrollCourse(courseToEnroll)))
@@ -126,6 +146,7 @@ export default function Dashboard({
 
       //}
     }
+   
   };
  
  
@@ -167,7 +188,7 @@ export default function Dashboard({
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {courses
+          {allCourses
             .filter((course) => 
               showAllCourses || isEnrolled(course._id) || currentUser.role === "FACULTY"
             )

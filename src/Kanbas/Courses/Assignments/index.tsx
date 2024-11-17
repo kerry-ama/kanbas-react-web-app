@@ -6,9 +6,12 @@ import AssignmentControl from "./AssignmentControl";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
 import * as db from "../../Database";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+
 export default function Assignments() {
   //const assignments = db.assignments;
   const { cid } = useParams();
@@ -17,6 +20,21 @@ export default function Assignments() {
 
   const { modules } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -32,7 +50,7 @@ export default function Assignments() {
 
   const handleDeleteAssignment = (assignmentId: string) => {
     if (window.confirm("Are you sure you want to remove this assignment?")) {
-      dispatch(deleteAssignment(assignmentId));
+      removeAssignment(assignmentId);
     }
   };
 
@@ -54,7 +72,7 @@ export default function Assignments() {
           <ul className="wd-assignments-list list-group rounded-0">
             {assignments
 
-              .filter((assignment: any) => assignment.course === cid)
+              //.filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (
                 <li className="wd-assignment-list-item list-group-item p-3 ps-1">
                   <div>
@@ -68,7 +86,8 @@ export default function Assignments() {
                     </Link>  | <strong>Not available until</strong> {formatDate(assignment.availability)} | <AssignmentControlButtons assignmentId={assignment._id}
                       //deleteAssignment={(assignmentId) => {
                         //dispatch(deleteAssignment(assignmentId));}}
-                        deleteAssignment={() => handleDeleteAssignment(assignment._id)}
+                        //deleteAssignment={() => handleDeleteAssignment(assignment._id)}
+                        deleteAssignment={(assignmentId) => handleDeleteAssignment(assignmentId)}
                        /><br />
                     <div className="indented-text"><strong>Due</strong> {formatDate(assignment.due)} | {assignment.points} pts</div>
 

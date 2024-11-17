@@ -3,13 +3,17 @@ import { enrollments } from "../Database";
 
 const initialState = {
   enrollments: enrollments,
-  //courses: courses,
+  //enrollments: [],
 };
 
 const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
+    setEnrollments: (state, action) => {
+      state.enrollments = action.payload;
+    },
+
     enrollCourse: (state, { payload: { userId, courseId } }) => {
       
         const newEnrollment = {
@@ -26,7 +30,7 @@ const enrollmentsSlice = createSlice({
       //state.enrollments = state.enrollments.filter(
         //(enrollment) => enrollment.user !== userId && enrollment.course !== courseId 
         state.enrollments = state.enrollments.filter(
-            (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
+            (enrollment: any) => !(enrollment.user === userId && enrollment.course === courseId)
       );
       state.enrollments = [...state.enrollments];
       console.log(state.enrollments)
