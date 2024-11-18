@@ -114,7 +114,7 @@ export default function Dashboard({
 
 
 
-  
+
   const handleEnrollmentToggle = async (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
     console.log(payload)
