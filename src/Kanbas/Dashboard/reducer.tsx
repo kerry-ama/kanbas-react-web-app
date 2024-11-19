@@ -35,6 +35,7 @@ const enrollmentsSlice = createSlice({
       state.enrollments = [...state.enrollments];
       console.log(state.enrollments)
     },
+    
     //showAllCourses: (state, { payload: { userId, courseId } }) => {
       //console.log("before" + state.enrollments)
     

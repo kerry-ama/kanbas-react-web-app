@@ -109,7 +109,7 @@ export default function Kanbas() {
               allCourses={allCourses}
               setAllCourses={setAllCourses}
               enrollments2={enrollments}
-              setEnrollments={setEnrollments}
+              setEnrollments2={setEnrollments}
               
               
               /></ProtectedRoute>} />

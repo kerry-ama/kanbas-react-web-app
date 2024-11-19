@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import * as db from "../Database";
 import React, { useState, useEffect } from "react";
-import { unenrollCourse, enrollCourse }
+import { unenrollCourse, enrollCourse, setEnrollments }
   from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEnrollments } from "./client";
@@ -10,11 +10,11 @@ import * as coursesClient from "../Courses/client";
 import * as dashboardClient from "./client";
 export default function Dashboard({
   courses, course, setCourse, addNewCourse,
-   deleteCourse, updateCourse, allCourses, setAllCourses, enrollments2, setEnrollments }: {
+   deleteCourse, updateCourse, allCourses, setAllCourses, enrollments2, setEnrollments2 }: {
    courses: any[]; course: any; setCourse: (course: any) => void;
    addNewCourse: () => void; deleteCourse: (course: any) => void;
    updateCourse: () => void; allCourses: any[]; setAllCourses: (allCourses: any) => void;
-    enrollments2: any[]; setEnrollments: (enrollments: any) => void;})  {
+    enrollments2: any[]; setEnrollments2: (enrollments: any) => void;})  {
   
    const { currentUser } = useSelector((state: any) => state.accountReducer);
    console.log("current user")
@@ -28,8 +28,9 @@ export default function Dashboard({
   const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
   const dispatch = useDispatch();
   const [displayedCourses, setDisplayedCourses] = useState(courses);
-  const [showAllCourses, setShowAllCourses] = useState(true);
-
+  const [showAllCourses, setShowAllCourses] = useState(false);
+  const [currentEnrollments, setCurrentEnrollments] = useState(new Set());
+ 
 
   
   const [showAll, setAll] = useState(allCourses);
@@ -40,7 +41,8 @@ export default function Dashboard({
     const initializeEnrollments = async () => {
       try {
         const enrollments = await fetchEnrollments(currentUser._id);
-        dispatch({ type: "SET_ENROLLMENTS", payload: enrollments });
+        dispatch(setEnrollments(enrollments));
+        setCurrentEnrollments(new Set(enrollments.map((enrollment: { course: any; }) => enrollment.course)))
       } catch (error) {
         console.error("Error fetching enrollments:", error);
       }
@@ -48,6 +50,7 @@ export default function Dashboard({
   
     initializeEnrollments();
   }, [currentUser._id, dispatch]);
+  console.log("USE EFFECT ENROLLMENTS", enrollments)
   
 
   const isStudent = currentUser.role === "STUDENT";
@@ -56,15 +59,7 @@ export default function Dashboard({
   //db call fetch courses then set
   //const toggleEnrollmentView = () => setShowAllCourses(!showAllCourses);
   console.log(showAllCourses);
-  /*
-  const toggleEnrollmentView = async () => {
-    if (showAllCourses) {
-      dispatch(allCourses)
-    } else {
-    setShowAllCourses(!showAllCourses);
-    }
-  }; 
-  */
+
   const fetchAllCourses = async () => {
     try {
       const courses = await coursesClient.fetchAllCourses();
@@ -75,8 +70,13 @@ export default function Dashboard({
     }
   };
 
+  //use effect..call fetchEnrollments
+  //call api that gets all the courses
   const toggleEnrollmentView = async () => {
-    if (showAllCourses) {
+
+    setShowAllCourses(prev => !prev)
+    /*if (showAllCourses) {
+      
       try {
         // Fetch enrollments for the current user
         const enrollments = await fetchEnrollments(currentUser._id);
@@ -99,26 +99,33 @@ export default function Dashboard({
       
     }
     setShowAllCourses(!showAllCourses); // Toggle the view state
+    */
   };
   
+  const courseToDisplay = showAllCourses ? allCourses : courses
   
 
   // Check if the student is enrolled in a course
  
 
-  const isEnrolled = (courseId: string) =>
-    enrollments.some((enrollment: any) => enrollment.user === currentUser._id && enrollment.course === courseId);
-  console.log("ENROLLMENTS", enrollments);
-  console.log(currentUser);
+  const isEnrolled = (courseId: string) => 
+    courses.some(course => course._id === courseId)
+  
+    //courses.some((enrollment: any) => enrollment.user === currentUser._id && enrollment.course === courseId);
+  //console.log("ISENROLLED", isEnrolled(course._id));
+  //console.log(currentUser);
  
 
-
+// ENROLL - need to call the API but need to update the courses as well 
+//use setCourses. unenrol
+//enrollments stored in courses
 
 
   const handleEnrollmentToggle = async (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
     console.log(payload)
-    if (isEnrolled(courseId)) {
+    
+    if (isEnrolled(course._id)) {
       //dispatch(unenrollCourse(payload));
       await dashboardClient.unenrollUserFromCourse(currentUser._id, courseId);
       dispatch(unenrollCourse(payload));
@@ -146,10 +153,11 @@ export default function Dashboard({
 
       //}
     }
+      
    
   };
  
- 
+  console.log("COURSESSSS", courses)
 
 
   return (
@@ -163,9 +171,10 @@ export default function Dashboard({
           {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       )}
-      <div>
-      <h5>New Course
+      <div className="align-items">
+      {currentUser.role === "FACULTY" && <h5>New Course  </h5>}
       {currentUser.role === "FACULTY" &&
+  
         <button className="btn btn-primary float-end"
           id="wd-add-new-course-click"
           onClick={addNewCourse} > Add </button>}
@@ -174,9 +183,10 @@ export default function Dashboard({
                 onClick={updateCourse} id="wd-update-course-click">
           Update
           </button>}
+        
           {currentUser.role === "FACULTY" &&
       <hr />}<br /> 
-      </h5>
+     
       </div>
       {currentUser.role === "FACULTY" &&
       <input defaultValue={course.name} value={course.name} className="form-control mb-2"
@@ -188,8 +198,8 @@ export default function Dashboard({
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {allCourses
-            .filter((course) => 
+          {courseToDisplay
+            /*.filter((course: any) => 
               showAllCourses || isEnrolled(course._id) || currentUser.role === "FACULTY"
             )
           
@@ -201,7 +211,7 @@ export default function Dashboard({
                    )) */
                     
                     
-          .map((course) => (
+          .map((course: any) => (
             <div className="wd-dashboard-course col" style={{ width: "300px" }}>
               <div className="card rounded-3 overflow-hidden">
                 <Link to={`/Kanbas/Courses/${course._id}/Home`}
