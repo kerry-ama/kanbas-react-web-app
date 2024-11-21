@@ -9,9 +9,9 @@ import { fetchAllCourses } from "../Courses/client";
 import * as coursesClient from "../Courses/client";
 import * as dashboardClient from "./client";
 export default function Dashboard({
-  courses, course, setCourse, addNewCourse,
+  courses, course, setCourse, setCourses, addNewCourse,
    deleteCourse, updateCourse, allCourses, setAllCourses, enrollments2, setEnrollments2 }: {
-   courses: any[]; course: any; setCourse: (course: any) => void;
+   courses: any[]; course: any; setCourse: (course: any) => void; setCourses: (courses: any) => void;
    addNewCourse: () => void; deleteCourse: (course: any) => void;
    updateCourse: () => void; allCourses: any[]; setAllCourses: (allCourses: any) => void;
     enrollments2: any[]; setEnrollments2: (enrollments: any) => void;})  {
@@ -36,20 +36,22 @@ export default function Dashboard({
   const [showAll, setAll] = useState(allCourses);
 
   console.log(showAllCourses);
+  const initializeEnrollments = async () => {
+    try {
+      const enrollments = await fetchEnrollments(currentUser._id);
+      dispatch(setEnrollments(enrollments));
+      setCurrentEnrollments(new Set(enrollments.map((enrollment: { course: any; }) => enrollment.course)))
+    } catch (error) {
+      console.error("Error fetching enrollments:", error);
+    }
+  };
 
   useEffect(() => {
-    const initializeEnrollments = async () => {
-      try {
-        const enrollments = await fetchEnrollments(currentUser._id);
-        dispatch(setEnrollments(enrollments));
-        setCurrentEnrollments(new Set(enrollments.map((enrollment: { course: any; }) => enrollment.course)))
-      } catch (error) {
-        console.error("Error fetching enrollments:", error);
-      }
-    };
-  
+    
+    handleEnrollmentToggle(course._id);
     initializeEnrollments();
-  }, [currentUser._id, dispatch]);
+    
+  }, [course._id]);
   console.log("USE EFFECT ENROLLMENTS", enrollments)
   
 
@@ -60,15 +62,7 @@ export default function Dashboard({
   //const toggleEnrollmentView = () => setShowAllCourses(!showAllCourses);
   console.log(showAllCourses);
 
-  const fetchAllCourses = async () => {
-    try {
-      const courses = await coursesClient.fetchAllCourses();
-      setAllCourses(courses);
-      setDisplayedCourses(courses); // Initialize displayed courses with all courses
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
 
   //use effect..call fetchEnrollments
   //call api that gets all the courses
@@ -103,14 +97,15 @@ export default function Dashboard({
   };
   
   const courseToDisplay = showAllCourses ? allCourses : courses
-  
+  //const courseToDisplay = showAllCourses ? allCourses : courses
 
   // Check if the student is enrolled in a course
  
-
+  //courses holds a particular student's enrollments
   const isEnrolled = (courseId: string) => 
-    courses.some(course => course._id === courseId)
-  
+    courses.some((course: any) => course._id === courseId)
+  //const isEnrolled = (courseId: string) =>
+    //enrollments.some((enrollment: any) => enrollment.course === courseId);
     //courses.some((enrollment: any) => enrollment.user === currentUser._id && enrollment.course === courseId);
   //console.log("ISENROLLED", isEnrolled(course._id));
   //console.log(currentUser);
@@ -121,16 +116,28 @@ export default function Dashboard({
 //enrollments stored in courses
 
 
+console.log("ISENROLLED COURSE IDDDDD", isEnrolled(course._id))
   const handleEnrollmentToggle = async (courseId: string) => {
     const payload = { userId: currentUser._id, courseId };
-    console.log(payload)
-    
-    if (isEnrolled(course._id)) {
+    //console.log(payload)
+    console.log(courseId)
+    //console.log("ISENROLLED COURSE IDDDDD", isEnrolled(course._id))
+    if (isEnrolled(courseId)) {
+      console.log("UNENROLLINGGGG")
       //dispatch(unenrollCourse(payload));
       await dashboardClient.unenrollUserFromCourse(currentUser._id, courseId);
       dispatch(unenrollCourse(payload));
-      setDisplayedCourses((prevCourses) =>
-        prevCourses.filter((course) => course._id !== courseId)
+      //console.log("UNENROLLINGGGG");
+      setCurrentEnrollments((prev) => {
+        const updated = new Set(prev);
+        updated.delete(courseId);
+        return updated;
+      });
+      //setDisplayedCourses((prevCourses) =>
+        //prevCourses.filter((course) => course._id !== courseId)
+      //);
+      setCourses((prevCourses: any) =>
+        prevCourses.filter((course: any) => course._id !== courseId)
       );
      
     } else {
@@ -138,10 +145,14 @@ export default function Dashboard({
 
      await dashboardClient.enrollUserInCourse(currentUser._id, courseId);
       dispatch(enrollCourse(payload));
+      console.log("ENROLLINGGGG")
       const courseToEnroll = courses.find((course) => course._id === courseId);
+      setCurrentEnrollments((prev) => new Set(prev).add(courseId));
       if (courseToEnroll) {
-        setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
+        //setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
+        setCourses((prevCourses: any) => [...prevCourses, courseToEnroll]);
       }
+ 
       //const courseToEnroll = courses.find((course) => course._id === courseId);
       //dispatch(enrollCourse(courseToEnroll));
       //console.log(dispatch(enrollCourse(courseToEnroll)))

@@ -103,6 +103,7 @@ export default function Kanbas() {
             <Route path="/Dashboard" element={<ProtectedRoute><Dashboard courses={courses}
               course={course}
               setCourse={setCourse}
+              setCourses={setCourses}
               addNewCourse={addNewCourse}
               deleteCourse={deleteCourse}
               updateCourse={updateCourse}
