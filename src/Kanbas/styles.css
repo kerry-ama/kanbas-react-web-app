@@ -131,6 +131,11 @@ body * {
     white-space: nowrap; /* Prevents label text from wrapping */
 }
 
+.dropdown-row {
+    display: flex;
+    gap: 10px; /* Adjust the spacing between dropdowns */
+}
+
 
 
 
