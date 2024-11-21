@@ -49,6 +49,7 @@ export default function Dashboard({
   useEffect(() => {
     
     handleEnrollmentToggle(course._id);
+    toggleEnrollmentView();
     initializeEnrollments();
     
   }, [course._id]);
@@ -69,31 +70,9 @@ export default function Dashboard({
   const toggleEnrollmentView = async () => {
 
     setShowAllCourses(prev => !prev)
-    /*if (showAllCourses) {
-      
-      try {
-        // Fetch enrollments for the current user
-        const enrollments = await fetchEnrollments(currentUser._id);
-        const enrolledCourseIds = enrollments.map((enrollment: any) => enrollment.course);
+    
   
-        // Display only enrolled courses
-        setDisplayedCourses(courses.filter((course: any) =>
-          enrolledCourseIds.includes(course._id)
-        ));
-      } catch (error) {
-        console.error("Error fetching enrollments:", error);
-      }
-    } else {
-      // Display all courses
-      //const all = await fetchAllCourses();
-      //setDisplayedCourses(all);
-      console.log("else ")
-      setAllCourses(allCourses);
-      console.log(allCourses)
-      
-    }
-    setShowAllCourses(!showAllCourses); // Toggle the view state
-    */
+    
   };
   
   const courseToDisplay = showAllCourses ? allCourses : courses
@@ -146,23 +125,19 @@ console.log("ISENROLLED COURSE IDDDDD", isEnrolled(course._id))
      await dashboardClient.enrollUserInCourse(currentUser._id, courseId);
       dispatch(enrollCourse(payload));
       console.log("ENROLLINGGGG")
+      console.log("Courses before finding:", courses);
+      //checks if course is in enrolled list, if not courseToEnroll === undefined
       const courseToEnroll = courses.find((course) => course._id === courseId);
+      //grabs the selected course from allCourses list
+      const courseNotFound = allCourses.find((course) => course._id === courseId);
+      console.log("COURSE TO ENROLLLL", courseToEnroll)
       setCurrentEnrollments((prev) => new Set(prev).add(courseId));
-      if (courseToEnroll) {
+      if (courseToEnroll === undefined && courseNotFound) {
         //setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
-        setCourses((prevCourses: any) => [...prevCourses, courseToEnroll]);
+        setCourses((prevCourses: any) => [...prevCourses, courseNotFound]);
       }
  
-      //const courseToEnroll = courses.find((course) => course._id === courseId);
-      //dispatch(enrollCourse(courseToEnroll));
-      //console.log(dispatch(enrollCourse(courseToEnroll)))
-      //console.log(courseToEnroll)
-      
-      //if (courseToEnroll) {
-        //setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]);
-        //console.log(setDisplayedCourses((prevCourses) => [...prevCourses, courseToEnroll]))
-
-      //}
+     
     }
       
    
