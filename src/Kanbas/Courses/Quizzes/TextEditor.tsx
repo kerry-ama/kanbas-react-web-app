@@ -27,8 +27,8 @@ export default function TextEditor() {
                 modules={modules}
                 formats={formats}
             />
-            <p>Editor Output:</p>
-            <div dangerouslySetInnerHTML={{ __html: value }} />
+            {/*<p>Editor Output:</p>
+            <div dangerouslySetInnerHTML={{ __html: value }} />*/}
         </div>
     );
 
