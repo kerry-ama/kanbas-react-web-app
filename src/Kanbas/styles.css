@@ -135,6 +135,17 @@ body * {
     display: flex;
     gap: 10px; /* Adjust the spacing between dropdowns */
 }
+.flex-end-mc {
+    margin-left: auto;              /* Push this section to the far right */
+    gap: 8px;
+}
+
+.choice-row {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    margin-bottom: 10px;
+    gap: 10px; /* Adds spacing between elements */
+}
 
 
 

@@ -15,5 +15,8 @@ export default function AccountNavigation() {
           `list-group-item border border-0 ${isActive ? 'active' : 'text-danger'}`}>Signup  </NavLink> 
       <NavLink to={`/Kanbas/Account/Profile`} className={({ isActive }) => 
           `list-group-item border border-0 ${isActive ? 'active' : 'text-danger'}`}> Profile </NavLink> 
+      {currentUser && currentUser.role === "ADMIN" && (
+       <NavLink to={`/Kanbas/Account/Users`} className={({ isActive }) => 
+       `list-group-item border border-0 ${isActive ? 'active' : 'text-danger'}`}> Users </NavLink> )}
     </div>
 );}
