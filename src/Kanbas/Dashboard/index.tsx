@@ -76,6 +76,7 @@ export default function Dashboard({
   };
   
   const courseToDisplay = showAllCourses ? allCourses : courses
+  const coursesToRender = isStudent ? courseToDisplay : courses;
   //const courseToDisplay = showAllCourses ? allCourses : courses
 
   // Check if the student is enrolled in a course
@@ -184,7 +185,7 @@ console.log("ISENROLLED COURSE IDDDDD", isEnrolled(course._id))
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {courseToDisplay
+          {coursesToRender
             /*.filter((course: any) => 
               showAllCourses || isEnrolled(course._id) || currentUser.role === "FACULTY"
             )
