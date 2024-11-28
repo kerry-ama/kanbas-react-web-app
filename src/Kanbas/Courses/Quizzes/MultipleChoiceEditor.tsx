@@ -1,5 +1,7 @@
 import { useState } from "react";
 import TextEditor from "./TextEditor";
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 export default function MultipleChoiceEditor() {
     const [title, setTitle] = useState("");
@@ -57,7 +59,7 @@ export default function MultipleChoiceEditor() {
     return (
         <div id="wd-mc-editor">
             <div id="dropdown-container" className="dropdown-row">
-            <div className="dropdown">
+                <div className="dropdown">
                     <select
                         defaultValue={"easy"} style={{ height: "30px" }}
                     >
@@ -65,48 +67,58 @@ export default function MultipleChoiceEditor() {
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
                     </select>
-               
-            </div>
-            <div className="dropdown">
-                <label>
-                    <select
-                        defaultValue={"Multiple Choice"} style={{ height: "30px" }}
-                    >
-                        <option value="mc">Multiple Choice</option>
-                        <option value="tf">True/False</option>
-                        <option value="blank">Fill in the Blank</option>
-                    </select>
-                </label>
-            </div>
-            
-            <div className="flex-end-mc">
-            <label style={{ marginRight: "8px" }}>Points:</label>
-                <input
-                    type="number"
-                    value={points}
-                    onChange={(e) => setPoints(Number(e.target.value))}
-                    className="form-control"
-                    style={{ width: "100px" }}
-                />
-                
+
+                </div>
+                <div className="dropdown">
+                    <label>
+                        <select
+                            defaultValue={"Multiple Choice"} style={{ height: "30px" }}
+                        >
+                            <option value="mc">Multiple Choice</option>
+                            <option value="tf">True/False</option>
+                            <option value="blank">Fill in the Blank</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div className="flex-end-mc">
+                    <label style={{ marginRight: "8px" }}>Points:</label>
+                    <input
+                        type="number"
+                        value={points}
+                        onChange={(e) => setPoints(Number(e.target.value))}
+                        className="form-control"
+                        style={{ width: "100px" }}
+                    />
+
                 </div>
             </div>
             <hr />
             <h6><strong>Question:</strong></h6>
             <div className="mb-2">
-                <input 
+                <input
                     placeholder="Question Title"
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="form-control"
                 />
-                </div>
+            </div>
+            <div className="form-group">
+                <label htmlFor="question-text">Question</label>
+                <ReactQuill
+                    id="question-text"
+                    theme="snow"
+                    value={question}
+                    onChange={setQuestion}
+                    placeholder="Enter the question text here..."
+                />
+            </div>
 
             <TextEditor />
             <hr />
             <div>
-            <h6><strong>Answers:</strong></h6>
+                <h6><strong>Answers:</strong></h6>
             </div>
             <div className="form-group">
                 <label>Choices:</label>
@@ -118,7 +130,7 @@ export default function MultipleChoiceEditor() {
                             checked={choice.isCorrect}
                             onChange={() => selectCorrectChoice(choice.id)}
                         />
-                        <input 
+                        <input
                             value={choice.text}
                             onChange={(e) => updateChoiceText(choice.id, e.target.value)}
                             className="form-control"
@@ -134,29 +146,28 @@ export default function MultipleChoiceEditor() {
                         </button>
                     </div>
                 ))}
-                </div>
-                <button
-                    type="button"
-                    onClick={addChoice}
-                    className="btn btn-primary"
-                >
-                    Add Choice
-                </button>
-                
-            <hr className="me-1" />
-           
-            <div className="float-end me-1">
-            
-            <button onClick={handleCancel} className="btn btn-secondary me-1">Cancel</button>
-            <button onClick={handleSave} className="btn btn-danger">Save</button>
-               
-                {/*<Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1" type="button">Cancel </Link>
-                <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger" type="button">Save</Link>*/}
             </div>
-            </div>
-            
+            <button
+                type="button"
+                onClick={addChoice}
+                className="btn btn-primary"
+            >
+                Add Choice
+            </button>
 
-       
+            <hr className="me-1" />
+
+            <div className="float-end me-1">
+
+                <button onClick={handleCancel} className="btn btn-secondary me-1">Cancel</button>
+                <button onClick={handleSave} className="btn btn-danger">Save</button>
+
+                
+            </div>
+        </div>
+
+
+
     )
 
 }

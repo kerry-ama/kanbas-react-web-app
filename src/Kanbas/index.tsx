@@ -25,6 +25,7 @@ export default function Kanbas() {
   const fetchEnrollments = async () => {
     let enrollments = [];
     try {
+      
       enrollments = await courseClient.findEnrollmentsForUser(currentUser);
     } catch (error) {
       console.error(error);
@@ -49,10 +50,13 @@ export default function Kanbas() {
   const fetchCourses = async () => {
     let courses = [];
     try {
-      courses = await userClient.findMyCourses();
+      //courses = await userClient.findMyCourses();
+      courses = await courseClient.fetchAllCourses();
     } catch (error) {
+      console.log("LINE 53 KANBAS")
       console.error(error);
     }
+    console.log("KANBAS COURSES", courses)
     setCourses(courses);
     console.log(courses);
   };
