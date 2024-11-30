@@ -28,7 +28,7 @@ export default function QuizEditor() {
 
     console.log(course)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    if (currentUser.role !== 'FACULTY') {
+    if (currentUser.role !== 'FACULTY' && currentUser.role !== "ADMIN") {
         return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`}/>
     }
     return (

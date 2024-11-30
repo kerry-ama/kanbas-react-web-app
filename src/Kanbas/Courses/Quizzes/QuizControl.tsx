@@ -13,11 +13,11 @@ export default function QuizControl() {
     }
     return (
         <div id="wd-assignment-controls" className="text-nowrap">
-            {currentUser.role === "FACULTY" &&
+            {currentUser.role === "FACULTY" || currentUser.role === "ADMIN"  &&
             <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end">
         <BsThreeDotsVertical className="position-relative" style={{ bottom: "1px" }} />
         </button>}
-        {currentUser.role === "FACULTY" &&   
+        {currentUser.role === "FACULTY" || currentUser.role === "ADMIN" &&   
             <button onClick={addQuiz} id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Quiz</button>}

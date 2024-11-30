@@ -6,7 +6,7 @@ export default function QuizDetail() {
     const { cid, aid, qid, qeid } = useParams()
     console.log(qid)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    if (currentUser.role !== 'FACULTY') {
+    if (currentUser.role !== 'FACULTY' && currentUser.role !== "ADMIN") {
         return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`} />
     }
     const formatDate = (dateString: string) => {

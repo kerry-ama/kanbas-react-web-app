@@ -18,11 +18,17 @@ export default function PeopleDetails() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [editing, setEditing] = useState(false);
 
   const saveUser = async () => {
-    const [firstName, lastName] = name.split(" ");
+    const trimmedName = name.trim();
+    const [firstName, lastName] = trimmedName.split(" ");
+    console.log("NAME", name)
+    console.log("FIRSTNAME", firstName)
+    console.log("LASTNAME", lastName)
     const updatedUser = { ...user, firstName, lastName };
+   
     await client.updateUser(updatedUser);
     setUser(updatedUser);
     setEditing(false);
@@ -32,6 +38,14 @@ export default function PeopleDetails() {
   const saveEmail = async () => {
   
     const updatedUser = { ...user, email };
+    await client.updateUser(updatedUser);
+    setUser(updatedUser);
+    setEditing(false);
+    navigate(-1);
+  };
+  const saveRole = async () => {
+  
+    const updatedUser = { ...user, role };
     await client.updateUser(updatedUser);
     setUser(updatedUser);
     setEditing(false);
@@ -70,6 +84,19 @@ export default function PeopleDetails() {
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") { saveUser(); }}}/>)}
+              {user && editing && (
+          <input className="form-control w-50 wd-edit-email"
+            type="email"
+            defaultValue={`${user.email}`}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") { saveEmail(); }}}/>)}
+             {user && editing && (
+          <input className="form-control w-50 wd-edit-role"
+            defaultValue={`${user.role}`}
+            onChange={(e) => setRole(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") { saveRole(); }}}/>)}
         
         
         </div>

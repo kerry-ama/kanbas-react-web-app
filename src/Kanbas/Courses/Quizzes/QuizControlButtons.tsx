@@ -5,9 +5,9 @@ export default function QuizControlButtons() {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
     <div className="float-end">
-        {currentUser.role === "FACULTY" &&
+        {currentUser.role === "FACULTY" || currentUser.role === "ADMIN" &&
         <QuizGreenCheckmark />}
-        {currentUser.role === "FACULTY" &&
+        {currentUser.role === "FACULTY" || currentUser.role === "ADMIN" &&
       <IoEllipsisVertical className="fs-4" />}
     </div>
 );}
