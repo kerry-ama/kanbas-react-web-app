@@ -11,7 +11,10 @@ const store = configureStore({
     accountReducer,
     assignmentsReducer,
     enrollmentsReducer,
-    quizzesReducer,
+    quizzesReducer: quizzesReducer.quizzes,
+    questionsReducer: quizzesReducer.questions 
+
+
   },
 });
 export default store;

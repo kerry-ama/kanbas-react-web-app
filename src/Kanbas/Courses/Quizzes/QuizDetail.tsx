@@ -1,14 +1,17 @@
 import { useSelector } from "react-redux";
 import * as db from "../../Database";
 import { Navigate, useParams } from "react-router";
+import { useState } from "react";
 export default function QuizDetail() {
-    const quizzes = db.quizzes;
-    const { cid, aid, qid, qeid } = useParams()
-    console.log(qid)
+    //const quizzes = db.quizzes; //LOOK AT ASSIGNMENTS TO CONVERT TO DB
+    const quizzes = useSelector((state: any) => state.quizzesReducer.quizzes);
+    const { cid, qid, qeid } = useParams()
+   
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role !== 'FACULTY' && currentUser.role !== "ADMIN") {
         return <Navigate to={`/Kanbas/Courses/${cid}/Quizzes`} />
     }
+
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -20,6 +23,9 @@ export default function QuizDetail() {
           hour12: true
         });
       };
+
+
+  
     return (
         <div id="quiz-details">
 

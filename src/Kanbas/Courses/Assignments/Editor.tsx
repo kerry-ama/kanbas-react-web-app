@@ -36,7 +36,7 @@ export default function AssignmentEditor() {
     const [due, setDue] = useState(existingAssignment ? existingAssignment.due : "");
     const [availableFrom, setAvailableFrom] = useState(existingAssignment ? existingAssignment.availability : "");
     const [until_editor, setUntil] = useState(existingAssignment ? existingAssignment.until_editor : "");
-    console.log(existingAssignment)
+    //console.log(existingAssignment)
 
     /*
     const createAssignmentForCourse = async () => {
@@ -86,7 +86,7 @@ export default function AssignmentEditor() {
           } else {
             const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
             dispatch(addAssignment(assignment));
-            console.log(dispatch(addAssignment(assignmentData)))
+            //console.log(dispatch(addAssignment(assignmentData)))
           }
 
         // Navigate back to the Assignments screen

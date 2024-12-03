@@ -94,7 +94,7 @@ export default function MultipleChoiceEditor() {
                 </div>
             </div>
             <hr />
-            <h6><strong>Question:</strong></h6>
+            <h6><strong>Question Title:</strong></h6>
             <div className="mb-2">
                 <input
                     placeholder="Question Title"
@@ -105,7 +105,7 @@ export default function MultipleChoiceEditor() {
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="question-text">Question</label>
+                <label htmlFor="question-text"><strong>Question Text:</strong></label>
                 <ReactQuill
                     id="question-text"
                     theme="snow"
@@ -115,7 +115,7 @@ export default function MultipleChoiceEditor() {
                 />
             </div>
 
-            <TextEditor />
+          
             <hr />
             <div>
                 <h6><strong>Answers:</strong></h6>

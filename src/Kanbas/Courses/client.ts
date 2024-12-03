@@ -54,6 +54,21 @@ export const deleteCourse = async (id: string) => {
     return response.data;
 };
 
+//QUIZ
+export const findQuizzesForCourse = async (courseId: string) => {
+  const response = await axiosWithCredentials
+    .get(`${COURSES_API}/${courseId}/quizzes`);
+  return response.data;
+};
+export const createQuizForCourse = async (courseId: string, quiz: any) => {
+  const response = await axiosWithCredentials.post(
+    `${COURSES_API}/${courseId}/quizzes`,
+    quiz
+  );
+  return response.data;
+};
+
+
 //ENROLLMENTS
 export const findEnrollmentsForUser = async (userId: string) => {
   const response = await axios.get(`${ENROLLMENT_API}/${userId}`);
