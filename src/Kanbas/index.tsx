@@ -65,7 +65,7 @@ export default function Kanbas() {
   };
  
  
-
+  /*
   const fetchEnrollments = async () => {
     let enrollments = [];
     try {
@@ -77,7 +77,7 @@ export default function Kanbas() {
     setEnrollments(enrollments);
     console.log(enrollments);
   }
-  /*
+  
   const fetchAllCourses = async () => {
     let allCourses = [];
     try {
@@ -113,7 +113,7 @@ export default function Kanbas() {
     }
  
     //fetchAllCourses();
-    fetchEnrollments();
+    //fetchEnrollments();
   }, [currentUser, enrolling]);
 
  
